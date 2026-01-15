@@ -972,36 +972,40 @@
 					"${t}"
 
 					PRODUCTOS DISPONIBLES (elige SOLO UNO):
-					- Musahi → Breakout / Momentum intradía. Mejor en volatilidad media-alta, rupturas, tendencia, sesiones activas.
-					- NebulaX → Mean Reversion. Mejor en rangos, sobreextensión, lateralidad, volatilidad baja o moderada.
-					- RiskForge → Gestión de riesgo y portafolio. Mejor cuando el foco es drawdown, riesgo por trade, prop firms, correlación o capital.
+					- Musahi → Breakout / Momentum intradía (volatilidad media/alta, tendencia, rupturas).
+					- NebulaX → Mean Reversion (rangos, sobreextensión, volatilidad baja/moderada).
+					- RiskForge → Gestión de riesgo y portafolio (drawdown, prop firms, riesgo por trade).
 
 					REGLAS DE DECISIÓN:
-					- Si el escenario habla de mercado, precio o entradas → Musahi o NebulaX según el contexto.
-					- Si el escenario habla de riesgo, límites, % de riesgo, prop firms o capital → RiskForge.
-					- Si el input es muy corto o ambiguo, da una recomendación provisional y acláralo brevemente.
+					- Si el foco es mercado/entradas → Musahi o NebulaX según contexto.
+					- Si el foco es FTMO, prop firms, drawdown o riesgo → RiskForge.
+					- Si el input es corto o ambiguo, da una recomendación clara sin pedir más datos.
 
-					FORMATO OBLIGATORIO:
-					Responde en Markdown usando EXACTAMENTE esta estructura:
+					FORMATO DE SALIDA (OBLIGATORIO):
+					Responde en Markdown usando EXACTAMENTE esta estructura y emojis:
 
-					### Producto recomendado
+					---
+
+					### 🧠 Producto recomendado
 					**<Musahi | NebulaX | RiskForge>**
 
-					### Por qué
-					- Explicación breve basada en el escenario.
+					### 📌 Por qué
+					- Explicación clara y directa en 1–2 líneas.
 
-					### Cuándo conviene
-					- Condición típica donde este producto funciona mejor.
+					### 📈 Cuándo conviene
+					- Situación típica donde este producto encaja mejor.
 
-					### Nota de riesgo
-					- Recordatorio corto (demo primero, sin promesas, gestión de riesgo).
+					### ⚠️ Nota de riesgo
+					- Recordatorio breve: demo primero, sin promesas, gestión de riesgo.
+
+					---
 
 					REGLAS DE ESTILO:
-					- Idioma: el mismo que use el usuario.
-					- Estilo: claro, profesional y directo.
-					- Máximo 80–100 palabras.
-					- No uses lenguaje académico.
-					- No hagas promesas ni des asesoramiento financiero personalizado.
+					- Idioma: el mismo del usuario.
+					- Frases cortas, sin párrafos largos.
+					- Máximo 70–90 palabras.
+					- No lenguaje técnico innecesario.
+					- No prometer resultados ni dar asesoramiento financiero.
 					`;
 		  try {
 			const s = await fetch("/api/gemini", {
