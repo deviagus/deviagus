@@ -128,6 +128,37 @@
         });
     </script>
     <style>
+		/* Estilos para el contenido renderizado por marked */
+		#ai-content { color: #e5e7eb; line-height: 1.65; }
+		#ai-content h1, #ai-content h2, #ai-content h3 {
+		  color: #ffffff;
+		  font-weight: 800;
+		  margin: 0.8rem 0 0.5rem;
+		}
+		#ai-content h3 { font-size: 1.05rem; }
+
+		#ai-content p { margin: 0.45rem 0; }
+		#ai-content ul, #ai-content ol { margin: 0.5rem 0 0.7rem 1.2rem; }
+		#ai-content li { margin: 0.25rem 0; }
+
+		#ai-content strong { color: #ffffff; font-weight: 800; }
+
+		#ai-content hr {
+		  border: 0; border-top: 1px solid rgba(255,255,255,0.08);
+		  margin: 0.9rem 0;
+		}
+
+		#ai-content code {
+		  background: rgba(255,255,255,0.08);
+		  padding: 0.1rem 0.35rem;
+		  border-radius: 0.4rem;
+		}
+
+		#ai-content a {
+		  color: #93c5fd;
+		  text-decoration: underline;
+		}
+
         #trading-canvas {
             position: fixed;
             top: 0;
