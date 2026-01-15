@@ -1005,11 +1005,11 @@
 					PRODUCTOS DISPONIBLES (elige SOLO UNO):
 					- Musahi → Breakout / Momentum intradía (volatilidad media/alta, tendencia, rupturas).
 					- NebulaX → Mean Reversion (rangos, sobreextensión, volatilidad baja/moderada).
-					- RiskForge → Gestión de riesgo y portafolio (drawdown, prop firms, riesgo por trade).
+					- RiskForge → Gestión de riesgo y portafolio (calcular riesgo para acada trade, es solo un bot para leer operaciones ya que no opera).
 
 					REGLAS DE DECISIÓN:
-					- Si el foco es mercado/entradas → Musahi o NebulaX según contexto.
-					- Si el foco es FTMO, prop firms, drawdown o riesgo → RiskForge.
+					- Si el foco es mercado/entradas, FTMO, prop firms → Musahi o NebulaX según contexto.
+					- Si el foco es gestion de riesgo, drawdown o crear un portafolio → RiskForge.
 					- Si el input es corto o ambiguo, da una recomendación clara sin pedir más datos.
 
 					FORMATO DE SALIDA (OBLIGATORIO):
@@ -1017,16 +1017,15 @@
 
 					---
 
-					### 🧠 Producto recomendado
-					**<Musahi | NebulaX | RiskForge>**
+					🧠 Producto recomendado: **<Musahi | NebulaX | RiskForge>**
 
-					### 📌 Por qué
-					- Explicación clara y directa en 1–2 líneas.
+					📌 Por qué:
+					- Explicación breve y directa basada en el escenario.
 
-					### 📈 Cuándo conviene
+					📈 Cuándo conviene:
 					- Situación típica donde este producto encaja mejor.
 
-					### ⚠️ Nota de riesgo
+					⚠️ Nota de riesgo:
 					- Recordatorio breve: demo primero, sin promesas, gestión de riesgo.
 
 					---
