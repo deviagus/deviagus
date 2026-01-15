@@ -946,47 +946,59 @@
         });
 
         // --- 3. Lógica IA (Mantenida igual) ---
-		try {
-		  const s = await fetch("/api/gemini", {
-			method: "POST",
-			headers: {
-			  "Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-			  prompt: o
-			})
-		  });
+		async function analyzeMarket() {
+		  // Verificar si marked cargó (por defer)
+		  if (typeof marked === "undefined") {
+			alert("El módulo de IA se está cargando. Intenta de nuevo en unos segundos.");
+			return;
+		  }
 
-		  // Intentar parsear JSON de forma segura
-		  let r = {};
+		  const t = document.getElementById("market-input").value;
+		  const e = document.getElementById("ai-result");
+		  const a = document.getElementById("ai-content");
+		  const n = document.getElementById("analyze-btn");
+
+		  if (!t.trim()) return;
+
+		  n.innerHTML =
+			'<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analizando.';
+		  n.disabled = true;
+
+		  // tu prompt (mantenelo como lo tenías, acá va ejemplo corto)
+		  const o = `Eres un asistente experto en trading algorítmico y gestión de riesgo.
+		Analiza el siguiente escenario de mercado: "${t}"
+		y recomienda SOLO UNO de los productos (Musahi / NebulaX / RiskForge) sin prometer resultados.`;
+
 		  try {
-			r = await s.json();
-		  } catch (_) {
-			r = {};
+			const s = await fetch("/api/gemini", {
+			  method: "POST",
+			  headers: { "Content-Type": "application/json" },
+			  body: JSON.stringify({ prompt: o })
+			});
+
+			let r = {};
+			try {
+			  r = await s.json();
+			} catch (_) {
+			  r = {};
+			}
+
+			if (!s.ok) throw new Error(r.error || `Error HTTP ${s.status}`);
+			if (r.error) throw new Error(r.error);
+
+			const i = r.text || "No pude analizar el mercado en este momento.";
+			a.innerHTML = marked.parse(i);
+			e.classList.remove("hidden");
+		  } catch (err) {
+			a.innerHTML = `<span class="text-red-400 font-bold">⚠️ Error: ${err.message}</span>`;
+			e.classList.remove("hidden");
+		  } finally {
+			n.innerHTML =
+			  '<span>Analizar Escenario</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+			n.disabled = false;
 		  }
-
-		  // Si el server respondió con error HTTP
-		  if (!s.ok) {
-			throw new Error(r.error || `Error HTTP ${s.status}`);
-		  }
-
-		  // Si el backend devolvió error en JSON
-		  if (r.error) {
-			throw new Error(r.error);
-		  }
-
-		  const i = r.text || "No pude analizar el mercado en este momento.";
-
-		  a.innerHTML = marked.parse(i);
-		  e.classList.remove("hidden");
-
-		} catch (t) {
-		  a.innerHTML = `<span class="text-red-400 font-bold">⚠️ Error: ${t.message}</span>`;
-		  e.classList.remove("hidden");
-		} finally {
-		  n.innerHTML = '<span>Analizar Escenario</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
-		  n.disabled = false;
 		}
+
 
     </script>
 		<script>
