@@ -203,27 +203,59 @@
     <!-- LAZY SECTION MOUNT: AI Tool -->
     <div class="lazy-placeholder" style="min-height: 400px;">
         <template>
-            <section id="ai-tool" class="py-16 px-4 sm:px-6 lg:px-8 relative z-10 border-b border-bordercolor/30 bg-black/20">
-                <div class="max-w-4xl mx-auto">
-                    <div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl">
-                        <div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10">
-                            <div class="text-center mb-8">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 flex justify-center items-center gap-2">NeuroTrade IA <span class="text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">BETA</span></h2>
-                                <p class="text-gray-400 text-sm md:text-base">¿No sabés qué sistema elegir? Analiza tu escenario y la IA te orienta hacia la mejor solución para vos.</p>
-                            </div>
-                            <div class="space-y-4"><textarea id="market-input" rows="3" class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none" placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."></textarea> <button onclick="analyzeMarket()" id="analyze-btn" class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2"><span>Analizar Escenario</span> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></button></div>
-                            <div id="ai-result" class="prose prose-invert max-w-none leading-relaxed text-gray-200 prose-headings:text-white prose-strong:text-white prose-li:my-1 prose-p:my-2 max-h-56 md:max-h-64 overflow-y-auto pr-3 rounded-lg border border-bordercolor/40 bg-black/25">
-                                <div class="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-                                    <div class="bg-primary/20 p-2 rounded-lg shrink-0 mt-1 mb-2 sm:mb-0"><svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
-                                    <div class="w-full">
-                                        <div id="ai-content" class="prose prose-invert max-w-none leading-relaxed text-gray-200 prose-headings:text-white prose-strong:text-white prose-li:my-1 prose-p:my-2"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+			<section id="ai-tool" class="py-16 px-4 sm:px-6 lg:px-8 relative z-10 border-b border-bordercolor/30 bg-black/20">
+			  <div class="max-w-4xl mx-auto">
+				<div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl">
+				  <div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10">
+					<div class="text-center mb-8">
+					  <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 flex justify-center items-center gap-2">
+						NeuroTrade IA
+						<span class="text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">BETA</span>
+					  </h2>
+					  <p class="text-gray-400 text-sm md:text-base">
+						¿No sabés qué sistema elegir? Analiza tu escenario y la IA te orienta hacia la mejor solución para vos.
+					  </p>
+					</div>
+
+					<div class="space-y-4">
+					  <textarea
+						id="market-input"
+						rows="3"
+						class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none"
+						placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."
+					  ></textarea>
+
+					  <button
+						onclick="analyzeMarket()"
+						id="analyze-btn"
+						class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2"
+					  >
+						<span>Analizar Escenario</span>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+						</svg>
+					  </button>
+					</div>
+
+					<!-- Resultado (oculto hasta que haya respuesta) -->
+					<div id="ai-result" class="hidden mt-6 animate-fade-in">
+					  <div
+						class="max-h-56 md:max-h-64 overflow-y-auto pr-3 rounded-lg border border-bordercolor/40 bg-black/25 p-4"
+					  >
+						<div
+						  id="ai-content"
+						  class="prose prose-invert max-w-none leading-relaxed text-gray-200
+								 prose-headings:text-white prose-strong:text-white
+								 prose-li:my-1 prose-p:my-2"
+						></div>
+					  </div>
+					</div>
+
+				  </div>
+				</div>
+			  </div>
+			</section>
         </template>
     </div>
     
