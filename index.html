@@ -1034,32 +1034,27 @@
 			}
         });
 
-        // --- 3. Lógica IA (Mantenida igual) ---
-		async function analyzeMarket() {
+// --- 3. Lógica IA (Mantenida igual) ---
+
+		// ✅ Helper FUERA de analyzeMarket (NO toca tu prompt)
 		function renderAIResponse(text) {
-		  const clean = text.replace(/\*\*/g, '');
+		  const clean = String(text || "").replace(/\*\*/g, "");
 
 		  const get = (label) => {
-			const match = clean.match(new RegExp(label + ':([^\\n]+)', 'i'));
-			return match ? match[1].trim() : '';
+			const match = clean.match(new RegExp(label + ":([^\\n]+)", "i"));
+			return match ? match[1].trim() : "";
 		  };
 
-		  document.getElementById('ai-product').innerText =
-			get('Producto recomendado');
+		  document.getElementById("ai-product").innerText = get("Producto recomendado");
+		  document.getElementById("ai-why").innerText = get("Por qué");
+		  document.getElementById("ai-when").innerText = get("Cuándo conviene");
+		  document.getElementById("ai-risk").innerText = get("Nota de riesgo");
 
-		  document.getElementById('ai-why').innerText =
-			get('Por qué');
-
-		  document.getElementById('ai-when').innerText =
-			get('Cuándo conviene');
-
-		  document.getElementById('ai-risk').innerText =
-			get('Nota de riesgo');
-
-		  document.getElementById('ai-result').classList.remove('hidden');
+		  document.getElementById("ai-result").classList.remove("hidden");
 		}
 
-		  // Verificar si marked cargó (por defer)
+		async function analyzeMarket() {
+		  // Verificar si marked cargó (por defer)  ✅ lo dejo como lo tenías
 		  if (typeof marked === "undefined") {
 			alert("El módulo de IA se está cargando. Intenta de nuevo en unos segundos.");
 			return;
@@ -1072,53 +1067,54 @@
 		  if (!t.trim()) return;
 
 		  n.innerHTML =
-			'<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analizando.';
+			'<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analizando...';
 		  n.disabled = true;
 
-		  // tu prompt (mantenelo como lo tenías, acá va ejemplo corto)
-		const o = `Eres un asistente experto en trading algorítmico y gestión de riesgo.
-					Tu objetivo es recomendar el producto de OneUp Trading que mejor encaje con la situación del usuario, sin prometer resultados.
+		  // ✅ tu prompt (NO modificado)
+		  const o = `Eres un asistente experto en trading algorítmico y gestión de riesgo.
+							Tu objetivo es recomendar el producto de OneUp Trading que mejor encaje con la situación del usuario, sin prometer resultados.
 
-					Escenario del usuario:
-					"${t}"
+							Escenario del usuario:
+							"${t}"
 
-					PRODUCTOS DISPONIBLES (elige SOLO UNO):
-					- Musahi → Breakout / Momentum intradía (volatilidad media/alta, tendencia, rupturas).
-					- NebulaX → Mean Reversion (rangos, sobreextensión, volatilidad baja/moderada).
-					- RiskForge → Gestión de riesgo y portafolio (calcular riesgo para acada trade, es solo un bot para leer operaciones ya que no opera).
+							PRODUCTOS DISPONIBLES (elige SOLO UNO):
+							- Musahi → Breakout / Momentum intradía (volatilidad media/alta, tendencia, rupturas).
+							- NebulaX → Mean Reversion (rangos, sobreextensión, volatilidad baja/moderada).
+							- RiskForge → Gestión de riesgo y portafolio (calcular riesgo para acada trade, es solo un bot para leer operaciones ya que no opera).
 
-					REGLAS DE DECISIÓN:
-					- Si el foco es mercado/entradas, FTMO, prop firms → Musahi o NebulaX según contexto.
-					- Si el foco es gestion de riesgo, drawdown o crear un portafolio → RiskForge.
-					- Si el input es corto o ambiguo, da una recomendación clara sin pedir más datos.
+							REGLAS DE DECISIÓN:
+							- Si el foco es mercado/entradas, FTMO, prop firms → Musahi o NebulaX según contexto.
+							- Si el foco es gestion de riesgo, drawdown o crear un portafolio → RiskForge.
+							- Si el input es corto o ambiguo, da una recomendación clara sin pedir más datos.
 
-					FORMATO DE SALIDA (OBLIGATORIO):
-					Responde en Markdown usando EXACTAMENTE esta estructura y emojis:
+							FORMATO DE SALIDA (OBLIGATORIO):
+							Responde en Markdown usando EXACTAMENTE esta estructura y emojis:
 
-					---
+							---
 
-					🧠 Producto recomendado: **<Musahi | NebulaX | RiskForge>**
+							🧠 Producto recomendado: **<Musahi | NebulaX | RiskForge>**
 
-					📌 Por qué: Explicación breve y directa basada en el escenario.
+							📌 Por qué: Explicación breve y directa basada en el escenario.
 
-					📈 Cuándo conviene: Situación típica donde este producto encaja mejor.
+							📈 Cuándo conviene: Situación típica donde este producto encaja mejor.
 
-					⚠️ Nota de riesgo: Recordatorio breve: demo primero, sin promesas, gestión de riesgo.
+							⚠️ Nota de riesgo: Recordatorio breve: demo primero, sin promesas, gestión de riesgo.
 
-					---
+							---
 
-					REGLAS DE ESTILO:
-					- Idioma: el mismo del usuario.
-					- Frases cortas, sin párrafos largos.
-					- Máximo 70–90 palabras.
-					- No lenguaje técnico innecesario.
-					- No prometer resultados ni dar asesoramiento financiero.
-					`;
+							REGLAS DE ESTILO:
+							- Idioma: el mismo del usuario.
+							- Frases cortas, sin párrafos largos.
+							- Máximo 70–90 palabras.
+							- No lenguaje técnico innecesario.
+							- No prometer resultados ni dar asesoramiento financiero.
+							`;
+
 		  try {
 			const s = await fetch("/api/gemini", {
 			  method: "POST",
 			  headers: { "Content-Type": "application/json" },
-			  body: JSON.stringify({ prompt: o })
+			  body: JSON.stringify({ prompt: o }),
 			});
 
 			let r = {};
@@ -1132,10 +1128,20 @@
 			if (r.error) throw new Error(r.error);
 
 			const i = r.text || "No pude analizar el mercado en este momento.";
-			a.innerHTML = marked.parse(i);
+
+			// ✅ NUEVO: render ordenado (reemplaza marked + ai-content)
+			renderAIResponse(i);
+
+			// Asegura mostrar contenedor resultado
 			e.classList.remove("hidden");
 		  } catch (err) {
-			a.innerHTML = `<span class="text-red-400 font-bold">⚠️ Error: ${err.message}</span>`;
+			// ✅ NUEVO: error ordenado en tus bloques
+			renderAIResponse(
+			  `Producto recomendado: —
+		Por qué: Error: ${err.message}
+		Cuándo conviene: —
+		Nota de riesgo: Probá de nuevo en unos segundos.`
+			);
 			e.classList.remove("hidden");
 		  } finally {
 			n.innerHTML =
@@ -1143,6 +1149,7 @@
 			n.disabled = false;
 		  }
 		}
+
 
 
     </script>
