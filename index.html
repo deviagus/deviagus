@@ -1110,22 +1110,19 @@
 	(function () {
 	  function detectLanguage() {
 		try {
-          // --- LOGICA DE DETECCIÓN ---
           // 1. Referrer (si viene de Wix/iframe)
 		  const referrer = document.referrer || '';
           // 2. URL actual (si se usa ?lang=en para probar)
           const currentUrl = window.location.href;
           
           console.log("🔍 Debug Traducción - Referrer:", referrer);
-          console.log("🔍 Debug Traducción - Current URL:", currentUrl);
 
-          // Condición: Si el referrer es el dominio en inglés O la URL tiene ?lang=en
 		  if (referrer.includes('en.oneuptrading.org') || currentUrl.includes('lang=en')) {
-            console.log("✅ Detectado Inglés -> Aplicando traducción...");
+            console.log("✅ Detectado Inglés -> Aplicando traducción y cambio de links...");
 			setEnglish();
 		  } else {
             console.log("ℹ️ Detectado Español (Default)");
-			setSpanish(); // Opcional, ya está en ES
+			// setSpanish(); // Opcional
 		  }
 		} catch (e) {
           console.error("⚠️ Error crítico en detección de idioma:", e);
@@ -1135,7 +1132,7 @@
 	  function setEnglish() {
 		document.documentElement.lang = 'en';
         
-// Diccionario de Traducción
+        // 1. DICCIONARIO DE TEXTOS
 		const dictionary = {
 		  // --- HEADER & HERO ---
 		  'Sistemas activos 24/7': 'Live systems 24/7',
@@ -1220,9 +1217,7 @@
 		  // --- SECCIÓN: TESTIMONIOS (Completos) ---
 		  'Lo que dicen nuestros traders': 'What our traders say',
 		  'Testimonios reales de usuarios de': 'Real testimonials from users of',
-          // Testimonio 1 (Completo para que coincida exactamente)
           'Excelente herramienta completamente automatizada, con la oportunidad de poder crear nuevos set en otros pares cambiando los parámetros. Gracias a esta herramienta puedo trabajar de forma manual en otras cuentas a la vez que trabaja el bot de forma independiente. El autor ofrece soporte para dudas o sugerencias y es muy atento, enviando set actualizados y nuevas funciones.': 'Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters. Thanks to this tool I can work manually on other accounts while the bot works independently. The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.',
-          // Testimonio 2 (Completo)
           'Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.': 'A great and reliable robot, and the creator is a very attentive person. Delighted with the purchase, thank you very much.',
 
           // --- CERTIFICADOS ---
@@ -1269,23 +1264,26 @@
           'Sin promesas irreales. Sin gestión discrecional.': 'No unrealistic promises. No discretionary management.',
           'Solo sistemas diseñados con lógica, control y disciplina.': 'Only systems designed with logic, control, and discipline.'
 		};
+        
+        // 2. MAPEO DE LINKS (URLs)
+        // Aquí definimos qué links cambian cuando está en inglés
+        const linkMap = {
+            'https://www.oneuptrading.org/set': 'https://en.oneuptrading.org/set',
+            'https://www.oneuptrading.org/demo-gratis': 'https://en.oneuptrading.org/demo-gratis'
+        };
 
+        // Ejecutar traducciones
         translateSafe(dictionary);
+        updateLinksSafe(linkMap);
 	  }
 
-	  function setSpanish() {
-		document.documentElement.lang = 'es';
-	  }
-
-      // --- NUEVA FUNCIÓN SEGURA (NO DESTRUYE EL DOM) ---
+      // Función para traducir texto (sin romper eventos/canvas)
 	  function translateSafe(map) {
-        // 1. Traducir Nodos de Texto visibles (TreeWalker)
-        // Esto evita destruir eventos o referencias a elementos (como el Canvas)
+        // A. Nodos de Texto visibles
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while (node = walker.nextNode()) {
             let text = node.nodeValue;
-            // Solo procesar si tiene contenido real
             if (text.trim().length > 0) {
                 let replaced = false;
                 Object.entries(map).forEach(([es, en]) => {
@@ -1298,13 +1296,11 @@
             }
         }
 
-        // 2. Traducir contenido dentro de <template> (para Lazy Loading)
-        // Los templates no son parte del árbol visible, así que innerHTML aquí ES seguro
+        // B. Contenido dentro de <template> (Lazy Loading)
         document.querySelectorAll('template').forEach(tmpl => {
             let html = tmpl.innerHTML;
             let replaced = false;
             Object.entries(map).forEach(([es, en]) => {
-                // Usamos replaceAll para templates por si aparece varias veces
                 if (html.includes(es)) {
                     html = html.replaceAll(es, en);
                     replaced = true;
@@ -1313,6 +1309,33 @@
             if (replaced) tmpl.innerHTML = html;
         });
 	  }
+
+      // Función para actualizar Links (HREF)
+      function updateLinksSafe(map) {
+        // A. Links en el DOM activo (visible)
+        Object.entries(map).forEach(([oldUrl, newUrl]) => {
+            // Buscamos links que tengan EXACTAMENTE esa URL
+            const links = document.querySelectorAll(`a[href="${oldUrl}"]`);
+            links.forEach(link => {
+                link.href = newUrl;
+            });
+        });
+
+        // B. Links dentro de <template> (Lazy Loading)
+        // Como 'translateSafe' ya opera sobre el innerHTML de los templates,
+        // podemos hacer un reemplazo de string directo aquí también.
+        document.querySelectorAll('template').forEach(tmpl => {
+            let html = tmpl.innerHTML;
+            let replaced = false;
+            Object.entries(map).forEach(([oldUrl, newUrl]) => {
+                if (html.includes(oldUrl)) {
+                    html = html.replaceAll(oldUrl, newUrl);
+                    replaced = true;
+                }
+            });
+            if (replaced) tmpl.innerHTML = html;
+        });
+      }
 
 	  // Ejecutar al cargar
       if (document.readyState === 'loading') {
