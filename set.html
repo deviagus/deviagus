@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Servicio de optimización de sets algorítmicos para OneUp Trading. Ingeniería de datos para bots de trading.">
+    <title>Optimización de Sets | OneUp Trading</title>
+    
+    <!-- Fuente Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* * --- SISTEMA DE DISEÑO (Mobile First) --- 
+         * Definimos las variables base para la vista más pequeña (Móvil)
+         * y las escalamos mediante media queries.
+         */
+        :root {
+            /* Paleta de Colores (Preservada) */
+            --bg-main: #051610;
+            --bg-surface: #0a221a;
+            --bg-surface-hover: #0f2e23;
+            
+            --text-primary: #ecfdf5;
+            --text-secondary: #94a3b8; /* gray-400 aprox */
+            --text-accent: #6ee7b7;
+
+            --brand-primary: #3b82f6;
+            --brand-glow: rgba(59, 130, 246, 0.25);
+            
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --warning-border: #f59e0b;
+            --border-light: rgba(255, 255, 255, 0.08);
+
+            /* Espaciado Base (Móvil) */
+            --space-section: 4rem;      /* 64px - Compacto para móvil */
+            --space-element: 1.5rem;    /* 24px */
+            --container-padding: 1.25rem; /* 20px */
+            --container-max: 1200px;    /* Aumentado ligeramente para pantallas grandes modernas */
+            
+            /* Tipografía Base (Móvil) - Ajustada según referencia Tailwind */
+            --font-h1: 2.25rem;         /* text-4xl */
+            --font-subtitle: 1rem;      /* text-base */
+            --font-h2: 1.75rem;
+            --font-body: 1rem;
+
+            /* UI Utils */
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --touch-target: 48px; /* Mínimo para accesibilidad táctil */
+        }
+
+        /* --- BREAKPOINTS (Tablet & Desktop) --- */
+        
+        /* Tablet (768px - 1023px) */
+        @media (min-width: 768px) {
+            :root {
+                --space-section: 6rem;
+                --space-element: 2rem;
+                --container-padding: 2rem;
+                /* Ajuste Tablet según referencia (md:text-6xl y md:text-xl) */
+                --font-h1: 3.75rem;     /* text-6xl (60px) */
+                --font-subtitle: 1.25rem; /* text-xl (20px) */
+                --font-h2: 2.25rem;
+            }
+        }
+
+        /* Desktop (1024px+) */
+        @media (min-width: 1024px) {
+            :root {
+                --space-section: 8rem; 
+                /* Ajuste Desktop según referencia (lg:text-7xl) */
+                --font-h1: 4.5rem;      /* text-7xl (72px) */
+                --font-h2: 3rem;
+            }
+        }
+
+        /* --- RESET & BASE --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            font-size: var(--font-body);
+        }
+
+        /* --- BACKGROUND FX --- */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -10%; left: 50%; transform: translateX(-50%);
+            width: 100vw; height: 60vh;
+            background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
+            opacity: 0.5;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        .section {
+            padding: var(--space-section) 0;
+            position: relative;
+        }
+
+        /* HERO SECTION ESPECÍFICA (Ajuste solicitado) */
+        .hero-section {
+            padding-top: 140px; /* Aumentado para dar aire en móvil (aprox 8.75rem) */
+            padding-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Asegura centrado absoluto de hijos flex */
+        }
+
+        @media (min-width: 768px) {
+            .hero-section {
+                padding-top: 9rem;
+                padding-bottom: 3rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-section {
+                padding-top: 11rem; /* Proporcional en desktop */
+                padding-bottom: 4rem;
+            }
+        }
+
+        /* Grid System Responsivo */
+        .grid {
+            display: grid;
+            gap: var(--space-element);
+            width: 100%;
+        }
+
+        /* Mobile: 1 col (default) */
+        .grid-responsive-4, 
+        .grid-responsive-3, 
+        .grid-responsive-2 { 
+            grid-template-columns: 1fr; 
+        }
+
+        /* Tablet: Ajustes intermedios */
+        @media (min-width: 768px) {
+            .grid-responsive-4 { grid-template-columns: repeat(2, 1fr); } /* 2x2 en tablet */
+            .grid-responsive-3 { grid-template-columns: repeat(2, 1fr); } /* 2 arriba, 1 abajo */
+            .grid-responsive-2 { grid-template-columns: repeat(2, 1fr); }
+            
+            /* Hack visual para que el 3er elemento en tablet se centre si queda solo */
+            .grid-responsive-3 > *:last-child:nth-child(odd) {
+                grid-column: span 2;
+                max-width: 600px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
+        /* Desktop: Layout completo */
+        @media (min-width: 1024px) {
+            .grid-responsive-4 { grid-template-columns: repeat(4, 1fr); }
+            .grid-responsive-3 { grid-template-columns: repeat(3, 1fr); }
+            /* Reset del hack de tablet */
+            .grid-responsive-3 > *:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: none;
+            }
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* Importante para móvil */
+            gap: 1rem;
+        }
+
+        .text-center { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            color: var(--text-primary);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* Ajuste H1 según referencia: font-extrabold y tracking-tight */
+        h1 { 
+            font-size: var(--font-h1); 
+            margin-bottom: 1.5rem; /* mb-6 equivalent */
+            font-weight: 800; /* font-extrabold */
+            letter-spacing: -0.025em; /* tracking-tight */
+            line-height: 1.1; /* leading-tight */
+        }
+        
+        h2 { font-size: var(--font-h2); margin-bottom: 0.5rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        
+        /* Ajuste óptico para párrafos largos */
+        p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            max-width: 70ch; /* Lectura cómoda */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight { color: var(--brand-primary); }
+        
+        /* Ajuste Subtítulo según referencia */
+        .subtitle { 
+            font-size: var(--font-subtitle);
+            color: var(--text-secondary); /* text-gray-400 */
+            max-width: 650px; 
+            margin: 1rem auto 2.5rem; 
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            line-height: 1.625; /* leading-relaxed */
+        }
+
+        /* --- COMPONENTS --- */
+        
+        /* Botones Responsive */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 32px;
+            height: var(--touch-target); /* Altura mínima táctil */
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 1rem;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        /* En móvil los botones ocupan todo el ancho si están en grupo vertical */
+        @media (max-width: 480px) {
+            .flex-center { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: #fff;
+            border: 1px solid transparent;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+        }
+
+        /* Tarjetas Adaptables */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem; /* Padding reducido en móvil */
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            height: 100%; /* Igualar alturas en grid */
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .card { padding: 2.5rem 2rem; }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: var(--shadow-card);
+        }
+
+        .icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--brand-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-shrink: 0;
+        }
+        .icon-wrapper svg { width: 28px; height: 28px; }
+
+        /* Badge */
+        .badge-premium {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--brand-primary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            margin-bottom: 1rem; /* Margen reducido del badge */
+        }
+
+        /* --- LISTAS & TABLAS (Adaptación Táctica) --- */
+        .feature-list-group {
+            height: 100%;
+        }
+
+        .feature-list-group h3 {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list { list-style: none; }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 2.2rem;
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start; /* Alineación top para textos largos */
+        }
+
+        .feature-list li::before {
+            position: absolute;
+            left: 0;
+            top: 2px; /* Ajuste óptico */
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .list-yes li::before { content: "✓"; color: var(--success); }
+        .list-no li::before { content: "✕"; color: var(--danger); }
+
+        /* --- ALERT BOXES --- */
+        .frequency-block {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .alert-box {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning-border);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 2rem auto 0;
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        /* --- PROFILES --- */
+        .profile-card {
+            padding: 2rem;
+            height: 100%;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .profile-yes {
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
+            border-top: 4px solid var(--success);
+        }
+        .profile-no {
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+            border-top: 4px solid var(--danger);
+        }
+
+        /* --- FORMULARIO OPTIMIZADO PARA MÓVIL --- */
+        .form-wrapper {
+            background: var(--bg-surface);
+            padding: 2rem 1.5rem; /* Padding reducido móvil */
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .form-wrapper { padding: 3rem; }
+        }
+
+        .input-group { margin-bottom: 1.5rem; width: 100%; }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .input-field {
+            width: 100%;
+            height: var(--touch-target); /* Altura mínima 48px */
+            padding: 0 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem; /* Evita zoom en iOS */
+            transition: 0.3s;
+            appearance: none; /* Reset nativo para iOS */
+        }
+
+        textarea.input-field {
+            height: auto;
+            padding: 12px 16px;
+            min-height: 120px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--brand-primary);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .success-overlay { display: none; text-align: center; animation: fadeIn 0.5s ease; padding: 1rem 0; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <main>
+        <!-- HERO -->
+        <header class="hero-section text-center">
+            <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+                <span class="badge-premium">Servicio Exclusivo</span>
+                <h1>Optimización de Sets <br> <span class="highlight">Mantén tu Edge Vivo</span></h1>
+                <p class="subtitle">
+                    Ingeniería de datos aplicada a tus algoritmos. Ajustamos matemáticamente tus bots (Musashi, NebulaX) para que sigan el ritmo de la volatilidad actual.
+                </p>
+                <nav class="flex-center" style="margin-top: 2rem; width: 100%;">
+                    <a href="#solicitar" class="btn btn-primary" aria-label="Solicitar acceso al servicio">Solicitar Acceso</a>
+                    <a href="#proceso" class="btn btn-ghost" aria-label="Ver el proceso de ingeniería">Ver Proceso</a>
+                </nav>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; opacity: 0.6;">Solo para clientes activos de OneUp Trading</p>
+            </div>
+        </header>
+
+        <!-- EL PROBLEMA: 4 Vectores -->
+        <section class="section" aria-labelledby="problem-title">
+            <div class="container">
+                <div class="text-center">
+                    <h2 id="problem-title">Por qué los sets <span class="highlight">caducan</span></h2>
+                    <p class="subtitle">El mercado muta. Lo que funcionó en el Q1 puede destrozar tu cuenta en el Q3. Analizamos 4 vectores de cambio.</p>
+                </div>
+
+                <!-- Grid responsiva: 1 col (Móvil) -> 2 col (Tablet) -> 4 col (Desktop) -->
+                <div class="grid grid-responsive-4" style="margin-top: 3rem;">
+                    <!-- Vector 1 -->
+                    <div class="card text-center">
+                        <div class="icon-wrapper mx-auto">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                        </div>
+                        <h3>Volatilidad</h3>
+                        <p>El ATR cambia. Tus distancias de grid deben expandirse o contraerse para evitar stops innecesarios.</p>
+                    </div>
+                    <!-- Vector 2 -->
+                    <div class="card text-center">
+                        <div class="icon-wrapper mx-auto">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg>
+                        </div>
+                        <h3>Estructura</h3>
+                        <p>Detectamos cambios de régimen: ¿Estamos en rango o en tendencia direccional? El bot debe saberlo.</p>
+                    </div>
+                    <!-- Vector 3 -->
+                    <div class="card text-center">
+                        <div class="icon-wrapper mx-auto">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        </div>
+                        <h3>Correlación</h3>
+                        <p>Evitamos exposición doble cuando pares como EURUSD y GBPUSD se sincronizan peligrosamente.</p>
+                    </div>
+                    <!-- Vector 4 -->
+                    <div class="card text-center">
+                        <div class="icon-wrapper mx-auto">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </div>
+                        <h3>Noticias</h3>
+                        <p>Filtros de impacto ajustados a la realidad geopolítica actual. Más defensa, menos ruido.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLUCIÓN / PROCESO -->
+        <section id="proceso" class="section" aria-labelledby="process-title">
+            <div class="container">
+                <h2 id="process-title" class="text-center">Protocolo de <span class="highlight">Ingeniería</span></h2>
+                <div class="subtitle text-center">Metodología paso a paso para restaurar la ventaja estadística.</div>
+                
+                <!-- Grid responsiva: 1 col (Móvil) -> 2 cols (Tablet, 3ro centrado) -> 3 cols (Desktop) -->
+                <div class="grid grid-responsive-3" style="margin-top: 3rem;">
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </div>
+                        <h3>1. Re-Optimización</h3>
+                        <p>Procesamos 12-24 meses de data tick-real para encontrar los parámetros óptimos actuales (Step, TP, Multiplicadores).</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <h3>2. Walk-Forward</h3>
+                        <p>Validamos los sets en periodos "fuera de muestra" (Out-of-Sample) para garantizar que no hay sobreoptimización.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3>3. Prioridad: Supervivencia</h3>
+                        <p>Optimizamos buscando la reducción del Drawdown (DD) y el Factor de Recuperación, no solo el beneficio neto.</p>
+                    </div>
+                </div>
+
+                <!-- BLOQUE DE FRECUENCIA -->
+                <div class="frequency-block text-center">
+                    <h3>Frecuencia de Actualización</h3>
+                    <p style="color: var(--text-primary); font-size: 1.2rem;">
+                        Mensual o Bimestral <span style="color: var(--text-secondary); font-size: 0.95rem;">(según condiciones)</span>
+                    </p>
+
+                    <div class="alert-box" role="alert">
+                        <p style="margin: 0; color: #fff;">
+                            <strong style="color: var(--warning-border);">Nota Importante:</strong> 
+                            Este servicio es una labor de mantenimiento técnico y matemático. El trading conlleva riesgos inherentes y rendimientos pasados no garantizan resultados futuros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INCLUDES VS EXCLUDES -->
+        <section class="section">
+            <div class="container">
+                <!-- Grid 2 Cols (Stacks on Mobile) -->
+                <div class="grid grid-responsive-2">
+                    <!-- Columna SI -->
+                    <div class="feature-list-group">
+                        <h3>Qué incluye</h3>
+                        <ul class="feature-list list-yes">
+                            <li>Archivos .set actualizados listos para MT4/MT5.</li>
+                            <li>Changelog técnico detallado (razón de cada cambio).</li>
+                            <li>Reportes de Backtest y Validación de robustez.</li>
+                            <li>Soporte prioritario para implementación.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna NO -->
+                    <div class="feature-list-group">
+                        <h3>Qué NO incluye</h3>
+                        <ul class="feature-list list-no">
+                            <li>Promesas de rentabilidad fija mensual.</li>
+                            <li>Gestión de capital o señales de trading manual.</li>
+                            <li>Acceso a cuentas PAMM/MAM gestionadas.</li>
+                            <li>Asesoría financiera legal personalizada.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TARGET PROFILE -->
+        <section class="section">
+            <div class="container">
+                <h2 class="text-center">¿Es para ti?</h2>
+                
+                <div class="grid grid-responsive-2" style="margin-top: 3rem;">
+                    <div class="profile-card profile-yes">
+                        <h3 style="color: var(--success);">Ideal para ti si...</h3>
+                        <ul class="feature-list list-yes">
+                            <li>Entiendes que el mercado es dinámico y adaptable.</li>
+                            <li>Buscas consistencia a largo plazo, no dopamina rápida.</li>
+                            <li>Prefieres delegar la complejidad matemática.</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-card profile-no">
+                        <h3 style="color: var(--danger);">No es para ti si...</h3>
+                        <ul class="feature-list list-no">
+                            <li>Buscas un sistema mágico sin riesgo alguno.</li>
+                            <li>Cambias de estrategia tras la primera semana negativa.</li>
+                            <li>No dispones del capital mínimo recomendado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
