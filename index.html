@@ -196,10 +196,10 @@
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight mx-auto max-w-[18ch]"> Trading Algorítmico <br class="block sm:hidden" /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">de Alta Precisión</span> </h1>
         <p class="mt-4 text-base sm:text-lg md:text-xl text-gray-400 mx-auto mb-10 leading-relaxed max-w-[42ch] md:max-w-[60ch] lg:max-w-[70ch]"> Eliminá las emociones y operá con ventaja estadística. Desarrollamos bots de trading y sistemas cuantitativos para <span class="text-white font-semibold">Prop Firms</span> y operar capital real.</p>
         <div class="flex flex-row gap-4 justify-center items-center w-full max-w-md hero-buttons">
-            <a href="#ai-tool" onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold rounded-lg transition duration-300 shadow-lg shadow-purple-900/30 flex items-center gap-2 group cursor-pointer border border-white/10 flex-1 sm:flex-none justify-center" style="background-image: linear-gradient(to right, #9333ea, #2563eb);" >
+            <a href="#ai-tool" onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});" class="px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition duration-300 shadow-lg shadow-purple-900/30 flex items-center gap-2 group cursor-pointer border border-white/10 flex-none min-w-[140px] justify-center">
                 <span>✨</span> Probar IA
-            </a> 
-            <a href="#demo-gratis" onclick="event.preventDefault(); document.getElementById('demo-gratis').scrollIntoView({ behavior: 'smooth' });" class="px-8 py-4 bg-transparent border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold rounded-lg transition duration-300 flex-1 sm:flex-none text-center">Demo Gratis</a>
+            </a>
+            <a href="#demo-gratis" onclick="scrollToDemo(event)" class="px-5 py-3 bg-transparent border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold rounded-lg transition duration-300 flex-none min-w-[140px] text-center">
         </div>
     </header>
     
@@ -1154,6 +1154,18 @@
 
     </script>
 		<script>
+	function scrollToDemo(e) {
+		  if (e) e.preventDefault();
+
+		  const el = document.getElementById("demo-gratis");
+		  if (!el) return;
+
+		  // Espera a que el browser haga layout/pintado
+		  requestAnimationFrame(() => {
+			el.scrollIntoView({ behavior: "smooth", block: "start" });
+		  });
+	    }
+
 	(function () {
 	  function detectLanguage() {
 		try {
