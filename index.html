@@ -1,76 +1,42 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestros Servicios - Trading Algorítmico</title>
-    
-    <!-- 1. Resource Hints: Pre-conexión a dominios externos críticos -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://static.wixstatic.com">
-
-    <!-- 2. Critical CSS: Estilos mínimos para renderizar el "Above the Fold" inmediatamente -->
     <style id="critical-css">
-        /* Reset básico y fondo inmediato */
         body {
             background-color: #051a12;
-            color: #ffffff;
+            color: white;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding-top: 5rem; /* Equivalente a pt-20 */
+            padding-top: 5rem; /* pt-20 equiv */
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
-
-        /* Canvas fijo al fondo con baja opacidad inicial */
-        #trading-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.15;
-        }
-
-        /* Header: Estructura sólida para evitar CLS (Cumulative Layout Shift) */
+        /* Estilos básicos del Header para evitar layout shift */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 5rem 1rem;
+            padding: 5rem 1rem; /* py-20 px-4 */
             border-bottom: 1px solid rgba(30, 58, 47, 0.5);
             position: relative;
             z-index: 10;
-            min-height: 60vh; /* Reserva espacio vertical */
         }
-
         h1 {
-            font-size: 2.25rem;
+            font-size: 2.25rem; /* text-4xl */
             line-height: 1.1;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            color: white;
         }
-        
-        p.hero-desc {
-            font-size: 1.125rem;
-            color: #9ca3af;
-            max-width: 42rem;
-            margin: 1rem auto 2.5rem auto;
-            line-height: 1.625;
-        }
-
         @media (min-width: 768px) {
-            h1 { font-size: 3.75rem; }
+            h1 { font-size: 3.75rem; } /* md:text-6xl */
             header { padding-top: 8rem; padding-bottom: 8rem; }
         }
-
-        /* Botones del Hero: Estilos inline para evitar FOUC */
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -83,39 +49,48 @@
             color: #2563eb;
             margin-bottom: 2rem;
         }
-        
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            justify-content: center;
-            width: 100%;
-            align-items: center;
+        .hero-desc {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            color: #9ca3af;
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2.5rem;
+            line-height: 1.625;
         }
-        
+		.hero-buttons {
+		  display: flex;
+		  flex-direction: row;
+		  gap: 1rem;
+		  justify-content: center;
+		  width: 100%;
+		  align-items: center;
+		}
         @media (min-width: 640px) {
             .hero-buttons { flex-direction: row; }
         }
+        /* Scrollbar styles (preservados del original) */
+        html { scroll-behavior: smooth; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, .2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
 
-        /* Scrollbar personalizado */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, .2); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
-
-        /* Placeholders para Lazy Loading: Alturas fijas para evitar saltos */
-        .lazy-placeholder { display: block; width: 100%; }
-        
-        /* Utilidades Markdown (IA) */
-        #ai-content { color: #e5e7eb; line-height: 1.65; }
-        #ai-content h3 { font-size: 1.05rem; font-weight: 800; color: #fff; margin-top: 0.8rem; }
-        #ai-content p { margin: 0.45rem 0; }
-        #ai-content ul { margin: 0.5rem 0 0.7rem 1.2rem; }
-        #ai-content strong { color: #ffffff; }
+        /* Placeholder para secciones lazy */
+        .lazy-placeholder {
+            min-height: 300px; /* Evita colapso total */
+            display: block;
+        }
     </style>
 
-    <!-- 3. Configuración de Tailwind (Definida ANTES de cargar la librería) -->
+    <!-- 3. DEFERRED SCRIPTS 
+         Tailwind y Marked ahora cargan sin bloquear el render inicial -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+
     <script>
+        // Configuración de Tailwind (se ejecutará cuando cargue el script defer)
         window.tailwindConfig = {
             theme: {
                 extend: {
@@ -130,112 +105,174 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards'
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' }
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         }
                     }
                 }
             }
         };
+        // Hook para inyectar config antes de que Tailwind procese
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.tailwind) window.tailwind.config = window.tailwindConfig;
+            else document.addEventListener('load', () => { if(window.tailwind) window.tailwind.config = window.tailwindConfig; }, true);
+        });
     </script>
+    <style>
+			#ai-content::-webkit-scrollbar { width: 10px; }
+		#ai-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 999px; }
+		#ai-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 999px; }
+		#ai-content::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+		#ai-content hr {
+		  display: none;
+		}
 
-    <!-- 4. Scripts Diferidos (No bloquean el renderizado inicial) -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+		/* Estilos para el contenido renderizado por marked */
+		#ai-content { color: #e5e7eb; line-height: 1.65; }
+		#ai-content h1, #ai-content h2, #ai-content h3 {
+		  color: #ffffff;
+		  font-weight: 800;
+		  margin: 0.8rem 0 0.5rem;
+		}
+		#ai-content h3 { font-size: 1.05rem; }
+
+		#ai-content p { margin: 0.45rem 0; }
+		#ai-content ul, #ai-content ol { margin: 0.5rem 0 0.7rem 1.2rem; }
+		#ai-content li { margin: 0.25rem 0; }
+
+		#ai-content strong { color: #ffffff; font-weight: 800; }
+
+		#ai-content hr {
+		  border: 0; border-top: 1px solid rgba(255,255,255,0.08);
+		  margin: 0.9rem 0;
+		}
+
+		#ai-content code {
+		  background: rgba(255,255,255,0.08);
+		  padding: 0.1rem 0.35rem;
+		  border-radius: 0.4rem;
+		}
+
+		#ai-content a {
+		  color: #93c5fd;
+		  text-decoration: underline;
+		}
+
+        #trading-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: .15
+        }
+    </style>
 </head>
 
+<!-- Body con CSS inline mínimo para asegurar color de fondo inmediato -->
 <body class="bg-pagebg text-white font-sans antialiased relative pt-20" style="background-color: #051a12;">   
-    
+    <!-- DEFER CANVAS: Se inicializa vía JS más abajo -->
     <canvas id="trading-canvas"></canvas>
-
-    <!-- HEADER / HERO -->
+    <!-- HEADER / HERO (RENDERIZADO INMEDIATO) 
+         Este contenido es visible al instante gracias al Critical CSS y no está oculto.
+    -->
     <header class="relative z-10 w-full flex flex-col justify-center items-center px-4 py-20 md:py-32 lg:px-8 text-center border-b border-bordercolor/50">
-        <div class="hero-badge backdrop-blur-sm">
+        <div class="inline-flex items-center gap-x-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 backdrop-blur-sm hero-badge">
             <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>Sistemas activos 24/7
         </div>
-        
-        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight mx-auto max-w-[18ch]"> 
-            Trading Algorítmico <br class="block sm:hidden" /> 
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">de Alta Precisión</span> 
-        </h1>
-        
-        <p class="hero-desc mt-4 text-base sm:text-lg md:text-xl text-gray-400 mx-auto mb-10 leading-relaxed max-w-[42ch] md:max-w-[60ch] lg:max-w-[70ch]"> 
-            Eliminá las emociones y operá con ventaja estadística. Desarrollamos bots de trading y sistemas cuantitativos para <span class="text-white font-semibold">Prop Firms</span> y operar capital real.
-        </p>
-        
-        <div class="hero-buttons flex flex-row gap-4 justify-center items-center w-full max-w-md">
-            <a href="#ai-tool" onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});" class="px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition duration-300 shadow-lg shadow-purple-900/30 flex items-center gap-2 group cursor-pointer border border-white/10 flex-none min-w-[140px] justify-center text-center no-underline">
-                <span>✨</span> Probar IA
-            </a>
-            <a href="#demo-gratis" onclick="scrollToDemo(event)" class="px-5 py-3 bg-transparent border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold rounded-lg transition duration-300 flex-none min-w-[140px] text-center no-underline">
-                Demo Gratis
-            </a>
-        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight mx-auto max-w-[18ch]"> Trading Algorítmico <br class="block sm:hidden" /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">de Alta Precisión</span> </h1>
+        <p class="mt-4 text-base sm:text-lg md:text-xl text-gray-400 mx-auto mb-10 leading-relaxed max-w-[42ch] md:max-w-[60ch] lg:max-w-[70ch]"> Eliminá las emociones y operá con ventaja estadística. Desarrollamos bots de trading y sistemas cuantitativos para <span class="text-white font-semibold">Prop Firms</span> y operar capital real.</p>
+        <div class="flex flex-row gap-4 justify-center items-center w-full max-w-md hero-buttons">
+		  <a href="#ai-tool" onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});" class="px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition duration-300 shadow-lg shadow-purple-900/30 flex items-center gap-2 group cursor-pointer border border-white/10 flex-none min-w-[140px] justify-center"><span>✨</span> Probar IA</a>
+		  <a href="#demo-gratis" onclick="scrollToDemo(event)" class="px-5 py-3 bg-transparent border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold rounded-lg transition duration-300 flex-none min-w-[140px] text-center">Demo Gratis</a>
+
+		</div>
     </header>
-
-    <!-- LAZY SECTION: AI Tool -->
-    <div class="lazy-placeholder" style="min-height: 450px;">
+    <!-- LAZY SECTION MOUNT: AI Tool -->
+    <div class="lazy-placeholder" style="min-height: 400px;">
         <template>
-            <section id="ai-tool" class="py-16 px-4 sm:px-6 lg:px-8 relative z-10 border-b border-bordercolor/30 bg-black/20">
-              <div class="max-w-4xl mx-auto">
-                <div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl">
-                  <div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10">
-                    <div class="text-center mb-8">
-                      <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 flex justify-center items-center gap-2">
-                        NeuroTrade IA
-                        <span class="text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">BETA</span>
-                      </h2>
-                      <p class="text-gray-400 text-sm md:text-base">
-                        ¿No sabés qué sistema elegir? Analiza tu escenario y la IA te orienta hacia la mejor solución para vos.
-                      </p>
-                    </div>
+			<section id="ai-tool" class="py-16 px-4 sm:px-6 lg:px-8 relative z-10 border-b border-bordercolor/30 bg-black/20">
+			  <div class="max-w-4xl mx-auto">
+				<div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl">
+				  <div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10">
+					<div class="text-center mb-8">
+					  <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 flex justify-center items-center gap-2">
+						NeuroTrade IA
+						<span class="text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">BETA</span>
+					  </h2>
+					  <p class="text-gray-400 text-sm md:text-base">
+						¿No sabés qué sistema elegir? Analiza tu escenario y la IA te orienta hacia la mejor solución para vos.
+					  </p>
+					</div>
 
-                    <div class="space-y-4">
-                      <textarea id="market-input" rows="3" class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none" placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."></textarea>
-                      <button onclick="analyzeMarket()" id="analyze-btn" class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2">
-                        <span>Analizar Escenario</span>
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                      </button>
-                    </div>
+					<div class="space-y-4">
+					  <textarea
+						id="market-input"
+						rows="3"
+						class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none"
+						placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."
+					  ></textarea>
 
-                    <div id="ai-result" class="hidden mt-6 animate-fade-in">
-                      <div class="space-y-4">
-                        <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/20 border border-purple-500/20 rounded-xl p-4">
-                          <p class="text-sm text-purple-300 font-semibold mb-1">🧠 Producto recomendado</p>
-                          <h3 id="ai-product" class="text-xl font-bold text-white"></h3>
-                        </div>
-                        <div class="bg-black/30 border border-bordercolor rounded-xl p-4">
-                          <p class="text-sm font-semibold text-blue-400 mb-1">📌 ¿Por qué?</p>
-                          <p id="ai-why" class="text-gray-300 text-sm leading-relaxed"></p>
-                        </div>
-                        <div class="bg-black/30 border border-bordercolor rounded-xl p-4">
-                          <p class="text-sm font-semibold text-green-400 mb-1">🕒 ¿Cuándo conviene usarlo?</p>
-                          <p id="ai-when" class="text-gray-300 text-sm leading-relaxed"></p>
-                        </div>
-                        <div class="bg-red-900/20 border border-red-500/30 rounded-xl p-4">
-                          <p class="text-sm font-semibold text-red-400 mb-1">⚠️ Nota de riesgo</p>
-                          <p id="ai-risk" class="text-gray-300 text-sm leading-relaxed"></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+					  <button
+						onclick="analyzeMarket()"
+						id="analyze-btn"
+						class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2"
+					  >
+						<span>Analizar Escenario</span>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+						</svg>
+					  </button>
+					</div>
+
+					<!-- Resultado IA -->
+					<div id="ai-result" class="hidden mt-6 animate-fade-in">
+					  <div class="space-y-4">
+
+						<!-- Producto recomendado -->
+						<div class="bg-gradient-to-r from-purple-900/30 to-blue-900/20 border border-purple-500/20 rounded-xl p-4">
+						  <p class="text-sm text-purple-300 font-semibold mb-1">🧠 Producto recomendado</p>
+						  <h3 id="ai-product" class="text-xl font-bold text-white"></h3>
+						</div>
+
+						<!-- Por qué -->
+						<div class="bg-black/30 border border-bordercolor rounded-xl p-4">
+						  <p class="text-sm font-semibold text-blue-400 mb-1">📌 ¿Por qué?</p>
+						  <p id="ai-why" class="text-gray-300 text-sm leading-relaxed"></p>
+						</div>
+
+						<!-- Cuándo conviene -->
+						<div class="bg-black/30 border border-bordercolor rounded-xl p-4">
+						  <p class="text-sm font-semibold text-green-400 mb-1">🕒 ¿Cuándo conviene usarlo?</p>
+						  <p id="ai-when" class="text-gray-300 text-sm leading-relaxed"></p>
+						</div>
+
+						<!-- Nota de riesgo -->
+						<div class="bg-red-900/20 border border-red-500/30 rounded-xl p-4">
+						  <p class="text-sm font-semibold text-red-400 mb-1">⚠️ Nota de riesgo</p>
+						  <p id="ai-risk" class="text-gray-300 text-sm leading-relaxed"></p>
+						</div>
+
+					  </div>
+					</div>
+
+
+				  </div>
+				</div>
+			  </div>
+			</section>
         </template>
     </div>
     
-    <!-- LAZY SECTION: Servicios -->
-    <div class="lazy-placeholder" style="min-height: 1200px;">
+    <!-- LAZY SECTION MOUNT: Servicios -->
+    <div class="lazy-placeholder" style="min-height: 800px;">
         <template>
             <section class="py-24 px-4 sm:px-6 lg:px-8 relative z-10" id="servicios">
                 <div class="max-w-7xl mx-auto">
@@ -246,12 +283,10 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-                        <!-- Musahi -->
+                        <!-- Tarjeta 1: Musahi -->
                         <div class="bg-cardbg/95 backdrop-blur-sm rounded-2xl shadow-xl border border-bordercolor overflow-hidden hover:border-primary/50 transition duration-300 flex flex-col group h-full">
                             <div class="p-8 flex justify-center items-center h-60 bg-gradient-to-b from-transparent to-black/20 border-b border-bordercolor">
-                                <div class="relative group-hover:scale-105 transition-transform duration-300">
-                                    <img src="https://static.wixstatic.com/media/f5eb50_aba0a967d4c1458cab061da3e0f630c1~mv2.png" onerror="this.onerror=null;this.src='https://placehold.co/400x200/0a261a/white?text=Musahi';" loading="lazy" decoding="async" width="400" height="200" alt="Logo Musahi Trading" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg">
-                                </div>
+                                <div class="relative group-hover:scale-105 transition-transform duration-300"><img src="https://static.wixstatic.com/media/f5eb50_aba0a967d4c1458cab061da3e0f630c1~mv2.png" onerror="this.onerror=null;this.src='https://placehold.co/400x200/0a261a/white?text=Musahi';" loading="lazy" decoding="async" width="400" height="200" alt="Logo Musahi Trading" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg"></div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
                                 <div class="mb-4"><span class="bg-blue-900/30 text-blue-300 border border-blue-900/50 text-xs font-semibold px-2.5 py-0.5 rounded uppercase tracking-wide">Expert Advisor</span></div>
@@ -264,7 +299,7 @@
                                     <li class="flex items-start"><svg class="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span>USDJPY, XAUUSD, NAS100, DAX40...</span></li>
                                     <li class="flex items-start"><svg class="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Incluye set inicial optimizado</span></li>
                                     <li class="flex items-start"><svg class="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Incluye Guia de instalacion</span></li>                       
-                                </ul>
+                            </ul>
                                 <div class="mt-auto mb-6">
                                     <p class="text-xs text-gray-500 mb-2 font-bold uppercase tracking-wider">🔒 Ideal para:</p>
                                     <p class="text-sm text-gray-300">Challenges de prop firms y cuentas fondeadas</p>
@@ -273,12 +308,10 @@
                             </div>
                         </div>
 
-                        <!-- NebulaX -->
+                        <!-- Tarjeta 2: NebulaX -->
                         <div class="bg-cardbg/95 backdrop-blur-sm rounded-2xl shadow-xl border border-bordercolor overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col group h-full">
                             <div class="p-8 flex justify-center items-center h-60 bg-gradient-to-b from-transparent to-black/20 border-b border-bordercolor">
-                                <div class="relative group-hover:scale-105 transition-transform duration-300">
-                                    <img src="https://static.wixstatic.com/media/f5eb50_8303d96bf4464af99b346e37c5b6ceab~mv2.png" loading="lazy" decoding="async" width="400" height="200" alt="Logo NebulaX Trading" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg">
-                                </div>
+                                <div class="relative group-hover:scale-105 transition-transform duration-300"><img src="https://static.wixstatic.com/media/f5eb50_8303d96bf4464af99b346e37c5b6ceab~mv2.png" loading="lazy" decoding="async" width="400" height="200" alt="Logo NebulaX Trading" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg"></div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
                                 <div class="mb-4"><span class="bg-purple-900/30 text-purple-300 border border-purple-900/50 text-xs font-semibold px-2.5 py-0.5 rounded uppercase tracking-wide">Expert Advisor</span></div>
@@ -289,7 +322,7 @@
                                     <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg><span>Estrategia de mean reversion cuantitativa</span></li>
                                     <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><span>EURUSD, SP500</span></li>
                                     <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17h18v2H3zm0-7h18v5H3zm0-4h18v2H3z"/></svg><span>Baja correlación con sistemas de tendencia</span></li>
-                                    <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Incluye set inicial optimizado</span></li>
+                                                                <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Incluye set inicial optimizado</span></li>
                                     <li class="flex items-start"><svg class="w-5 h-5 text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Incluye Guia de instalacion</span></li>
                                 </ul>
                                 <div class="mt-auto mb-6">
@@ -300,12 +333,10 @@
                             </div>
                         </div>
 
-                        <!-- RiskForge -->
+                        <!-- Tarjeta 3: RiskForge -->
                         <div class="bg-cardbg/95 backdrop-blur-sm rounded-2xl shadow-xl border border-bordercolor overflow-hidden hover:border-orange-500/50 transition duration-300 flex flex-col group h-full">
                             <div class="p-8 flex justify-center items-center h-60 bg-gradient-to-b from-transparent to-black/20 border-b border-bordercolor">
-                                <div class="relative group-hover:scale-105 transition-transform duration-300">
-                                    <img src="https://static.wixstatic.com/media/f5eb50_737db52fd01b4cb9a078504f73822ae1~mv2.png" loading="lazy" decoding="async" width="400" height="200" alt="Logo RiskForge" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg">
-                                </div>
+                                <div class="relative group-hover:scale-105 transition-transform duration-300"><img src="https://static.wixstatic.com/media/f5eb50_737db52fd01b4cb9a078504f73822ae1~mv2.png" loading="lazy" decoding="async" width="400" height="200" alt="Logo RiskForge" class="max-h-40 w-auto object-contain border-2 border-bordercolor p-3 bg-pagebg rounded-xl shadow-lg"></div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
                                 <div class="mb-4"><span class="bg-orange-900/30 text-orange-300 border border-orange-900/50 text-xs font-semibold px-2.5 py-0.5 rounded uppercase tracking-wide">Utility / Panel</span></div>
@@ -328,7 +359,7 @@
                         </div>
                     </div>
                     
-                    <!-- Optimización de Sets -->
+                    <!-- SECCIÓN OPTIMIZACIÓN DE SETS -->
                     <div class="bg-gradient-to-br from-cardbg via-black/40 to-cardbg border border-bordercolor rounded-2xl p-6 md:p-8 relative overflow-hidden group hover:border-primary/30 transition duration-500 mb-20">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
                         <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-10">
@@ -360,7 +391,7 @@
                         </div>
                     </div>
 
-                    <!-- Demo Gratuita -->
+                    <!-- NUEVA SECCIÓN: DEMO GRATUITA -->
                     <div id="demo-gratis" class="max-w-7xl mx-auto mb-20">
                         <div class="bg-gradient-to-r from-cardbg to-pagebg border border-bordercolor rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
                             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
@@ -389,25 +420,21 @@
                         </div>
                         <div class="relative grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-0"></div>
-                            <!-- Paso 1 -->
                             <div class="relative z-10 bg-cardbg/60 backdrop-blur-md border border-bordercolor p-6 rounded-2xl text-center hover:border-primary/50 transition duration-300 group hover:-translate-y-1">
                                 <div class="w-16 h-16 bg-cardbg rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-lg"><span class="text-2xl font-bold text-primary group-hover:text-white">1</span></div>
                                 <h3 class="font-bold text-white text-lg mb-2">Acceso Inmediato</h3>
                                 <p class="text-sm text-gray-400 leading-snug">Compra tu licencia segura a través del mercado oficial de MQL5 y descarga al instante.</p>
                             </div>
-                            <!-- Paso 2 -->
                             <div class="relative z-10 bg-cardbg/60 backdrop-blur-md border border-bordercolor p-6 rounded-2xl text-center hover:border-primary/50 transition duration-300 group hover:-translate-y-1">
                                 <div class="w-16 h-16 bg-cardbg rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-lg"><span class="text-2xl font-bold text-primary group-hover:text-white">2</span></div>
                                 <h3 class="font-bold text-white text-lg mb-2">Instalación Simple</h3>
                                 <p class="text-sm text-gray-400 leading-snug">Abre tu MetaTrader 5 y encuentra el bot en tu navegador. Arrástralo al gráfico.</p>
                             </div>
-                            <!-- Paso 3 -->
                             <div class="relative z-10 bg-cardbg/60 backdrop-blur-md border border-bordercolor p-6 rounded-2xl text-center hover:border-primary/50 transition duration-300 group hover:-translate-y-1">
                                 <div class="w-16 h-16 bg-cardbg rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-lg"><span class="text-2xl font-bold text-primary group-hover:text-white">3</span></div>
                                 <h3 class="font-bold text-white text-lg mb-2">Carga el Edge</h3>
                                 <p class="text-sm text-gray-400 leading-snug">Carga el archivo <strong>.set</strong> incluido para aplicar nuestra configuración institucional.</p>
                             </div>
-                            <!-- Paso 4 -->
                             <div class="relative z-10 bg-cardbg/60 backdrop-blur-md border border-bordercolor p-6 rounded-2xl text-center hover:border-primary/50 transition duration-300 group hover:-translate-y-1">
                                 <div class="w-16 h-16 bg-cardbg rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-lg"><span class="text-2xl font-bold text-primary group-hover:text-white">4</span></div>
                                 <h3 class="font-bold text-white text-lg mb-2">Operativa Auto</h3>
@@ -421,7 +448,7 @@
         </template>
     </div>
     
-    <!-- LAZY SECTION: Certificados -->
+    <!-- LAZY SECTION MOUNT: Certificados -->
     <div class="lazy-placeholder" style="min-height: 600px;">
         <template>
             <section class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-bordercolor/50 bg-pagebg" id="certificados">
@@ -473,15 +500,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-center mt-12">
+                        <p class="text-gray-500 text-sm font-medium">Resultados obtenidos operando con Musahi, NebulaX y RiskForge bajo reglas estrictas de prop firms.</p>
+                    </div>
                 </div>
             </section>
         </template>
     </div>
     
-    <!-- LAZY SECTION: Track Record -->
+    <!-- LAZY SECTION MOUNT: Track Record -->
     <div class="lazy-placeholder" style="min-height: 600px;">
         <template>
-            <section class="relative py-24 overflow-hidden bg-[#0A3221]" id="trackrecord">
+            <section class="relative py-24 overflow-hidden bg-[#0A3221]" id="trackrecord" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);mask-image:linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)">
                 <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image:radial-gradient(#ffffff 1px, transparent 1px);background-size:30px 30px"></div>
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/10 blur-[120px] rounded-full pointer-events-none"></div>
                 <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -542,6 +572,7 @@
                                     </div>
                                 </div>
                                 <div class="lg:col-span-2 flex flex-col justify-between">
+                                    <!-- Placeholder Gráfico -->
                                     <div class="w-full h-64 bg-[#0A3221]/50 rounded-xl border border-[#1c4a36] p-4 relative overflow-hidden">
                                         <div class="absolute inset-0 flex flex-col justify-between p-4 pointer-events-none">
                                             <div class="w-full h-px bg-[#1c4a36] border-t border-dashed border-[#2d6a50] opacity-30"></div>
@@ -560,27 +591,39 @@
                                             <path d="M0,120 Q50,110 100,100 T200,80 T300,50 T400,30 T500,10" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     </div>
+                                    
+                                    <!-- Botón y Disclaimer -->
                                     <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
                                         <div class="text-sm text-gray-500">*Los resultados pasados no garantizan rendimientos futuros.</div>
                                         <a href="https://www.darwinexzero.com/es/darwin/XPJA" target="_blank" class="bg-gradient-to-r from-emerald-600 to-emerald-400 hover:from-emerald-500 hover:to-emerald-300 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 w-full sm:w-auto justify-center group shadow-lg shadow-emerald-900/20 transition-all duration-300">
                                             <span>Ver Análisis Completo</span>
-                                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                            </svg>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-10 pt-8 border-t border-[#1c4a36]/50 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition duration-500">
-                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">Darwinex<span class="font-light">Zero</span></div>
-                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">MyFxBook</div>
-                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">MetaTrader 5</div>
-                            </div>
+                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> 
+                                    Darwinex<span class="font-light">Zero</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg> 
+                                    MyFxBook
+                                </div>
+                                <div class="flex items-center gap-2 text-lg md:text-xl font-bold text-gray-400 hover:text-emerald-400 transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> 
+                                    MetaTrader 5
+                                </div>
                         </div>
                     </div>
                 </section>
             </template>
     </div>
         
-    <!-- LAZY SECTION: Testimonios -->
+    <!-- LAZY SECTION MOUNT: Testimonios -->
     <div class="lazy-placeholder" style="min-height: 400px;">
         <template>
             <section class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-bordercolor/50 bg-gradient-to-b from-black/60 to-pagebg" id="testimonios">
@@ -598,7 +641,7 @@
                                     <div class="text-yellow-400 font-bold text-sm">⭐ 5.0</div>
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm md:text-base italic">“Excelente herramienta completamente automatizada...”</p>
+                            <p class="text-gray-300 leading-relaxed text-sm md:text-base italic">“Excelente herramienta completamente automatizada, con la oportunidad de poder crear nuevos set en otros pares cambiando los parámetros. Gracias a esta herramienta puedo trabajar de forma manual en otras cuentas a la vez que trabaja el bot de forma independiente. El autor ofrece soporte para dudas o sugerencias y es muy atento, enviando set actualizados y nuevas funciones.”</p>
                         </a> <a href="https://www.mql5.com/en/market/product/137710#!tab=reviews" target="_blank" rel="noopener noreferrer" class="bg-cardbg/80 backdrop-blur-md rounded-2xl p-8 border border-bordercolor shadow-lg hover:-translate-y-1 transition-all duration-300 group hover:border-primary/30 block relative overflow-hidden">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-200 to-green-400 flex items-center justify-center text-[#0F4B45] font-extrabold shadow-inner text-sm">VX</div>
@@ -607,14 +650,14 @@
                                     <div class="text-yellow-400 font-bold text-sm">⭐ 5.0</div>
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm md:text-base italic">“Un gran robot y fiable y el creador un gran hombre y atento...”</p>
+                            <p class="text-gray-300 leading-relaxed text-sm md:text-base italic">“Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.”</p>
                         </a></div>
                 </div>
             </section>
         </template>
     </div>
 
-    <!-- LAZY SECTION: Galeria Telegram -->
+    <!-- LAZY SECTION MOUNT: Galeria Telegram -->
     <div class="lazy-placeholder" style="min-height: 500px;">
         <template>
             <section class="py-12 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-bordercolor/30 bg-pagebg">
@@ -625,36 +668,70 @@
                     </div>
                     <!-- Grid de imágenes -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                        <!-- Fila Superior: 4 Imágenes Verticales (aspect-ratio 3:4) -->
+                        
+                        <!-- Imagen V1 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_2d9fc60986fd48b7afc755151f1e489a~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 1" width="200" height="400" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_2d9fc60986fd48b7afc755151f1e489a~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+                        
+                        <!-- Imagen V2 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_e18db895582c4c7fb168d1f2e36f8f57~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 2" width="200" height="400" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_e18db895582c4c7fb168d1f2e36f8f57~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+                        
+                        <!-- Imagen V3 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_2b70b2d40caa47759d793005f7d37e38~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 3" width="200" height="400" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_2b70b2d40caa47759d793005f7d37e38~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 3" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+                        
+                        <!-- Imagen V4 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_3811842fc7a34d6ab5ca82d86054cc64~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 4" width="200" height="400" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_3811842fc7a34d6ab5ca82d86054cc64~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 4" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+
+                        <!-- Fila Inferior: 2 Imágenes Horizontales (aspect-ratio 16:9 / video) -->
+                        
+                        <!-- Imagen H1 -->
                         <div class="col-span-2 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-video overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_6695333b70214b2b939acad181922c01~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 1" width="400" height="225" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_6695333b70214b2b939acad181922c01~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+
+                        <!-- Imagen H2 -->
                         <div class="col-span-2 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-video overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_93aefb61a9a74c39a3a601eaddfaac99~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 2" width="400" height="225" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_93aefb61a9a74c39a3a601eaddfaac99~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
                             </div>
                         </div>
+
                     </div>
                     <div class="mt-10 text-center">
                         <a href="https://t.me/AlgoBotsDevi" target="_blank" class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors text-sm font-semibold">
@@ -666,7 +743,7 @@
         </template>
     </div>
     
-    <!-- LAZY SECTION: Youtube -->
+    <!-- LAZY SECTION MOUNT: Youtube (LAZY IFRAME automático al estar en template) -->
     <div class="lazy-placeholder" style="min-height: 400px;">
         <template>
             <section class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-bordercolor/30 bg-transparent" id="youtube-video">
@@ -675,16 +752,15 @@
                         <div class="flex-1 space-y-6 text-center md:text-left">
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-bold uppercase tracking-wider mb-2"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>En Vivo / Tutorial</div>
                             <h2 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">Mira cómo operamos en <span class="text-red-500">YouTube</span></h2>
-                            <p class="text-gray-400 text-lg leading-relaxed">Descubre la lógica y el razonamiento detrás de nuestros algoritmos de trading.</p><a href="https://www.youtube.com/channel/UCod_arTPFWBq-9eb6o1T0FA" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-red-900/30 group"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <p class="text-gray-400 text-lg leading-relaxed">Descubre la lógica y el razonamiento detrás de nuestros algoritmos de trading. En el canal compartimos análisis reales, resultados documentados y explicaciones claras sobre cómo funcionan nuestras estrategias en condiciones de mercado reales.</p><a href="https://www.youtube.com/channel/UCod_arTPFWBq-9eb6o1T0FA" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-red-900/30 group"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
                                 </svg> Ver Canal</a>
                         </div>
                         <div class="flex-1 w-full max-w-xl">
                             <div class="relative group rounded-2xl overflow-hidden shadow-2xl border border-bordercolor/50 bg-black">
                                 <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-primary opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
-                                <div class="relative w-full aspect-video bg-pagebg rounded-xl overflow-hidden">
-                                    <div class="absolute inset-0 bg-black/50 pointer-events-none"></div>
-                                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/A1V8dwMLFYw" title="YouTube video player" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <div class="relative w-full aspect-video bg-pagebg rounded-xl overflow-hidden" style="background-image:url('https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1000&auto=format&fit=crop');background-size:cover;background-position:center">
+                                    <div class="absolute inset-0 bg-black/50 pointer-events-none"></div><iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/A1V8dwMLFYw" title="YouTube video player" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>
@@ -694,10 +770,11 @@
         </template>
     </div>
 
-    <!-- LAZY SECTION: CTA FINAL -->
+    <!-- LAZY SECTION MOUNT: CTA FINAL -->
     <div class="lazy-placeholder" style="min-height: 400px;">
         <template>
             <section class="py-20 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-bordercolor/50 bg-pagebg">
+                <!-- Separador superior sutil -->
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
     
                 <div class="max-w-4xl mx-auto text-center">
@@ -712,6 +789,7 @@
                     </p>
     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full mb-8">
+                        <!-- Botón Primario -->
                         <a href="#servicios" 
                         onclick="event.preventDefault();document.getElementById('servicios').scrollIntoView({behavior:'smooth'});"
                         class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primaryhover text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-blue-900/30 transform hover:-translate-y-1 flex items-center justify-center gap-2">
@@ -719,23 +797,30 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                         </a>
                         
+                        <!-- Botón Secundario -->
                         <a href="#ai-tool" 
                         onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});"
                         class="w-full sm:w-auto px-8 py-4 bg-transparent border border-bordercolor hover:border-gray-400 text-gray-400 hover:text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center">
                             Comparar Sistemas
                         </a>
                     </div>
+    
+                    <!-- Micro-copy de confianza -->
+                    <div class="text-sm text-gray-500 font-medium opacity-80">
+                        <p>Sin promesas irreales. Sin gestión discrecional.</p>
+                        <p>Solo sistemas diseñados con lógica, control y disciplina.</p>
+                    </div>
                 </div>
             </section>
         </template>
     </div>
 
-    <!-- LOGICA UNIFICADA Y OPTIMIZADA -->
+    <!-- LOGICA: LAZY MOUNT & OPTIMIZED JS -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- 1. Intersection Observer con Root Margin Ampliado ---
-            // Carga las secciones 300px ANTES de que el usuario llegue a ellas.
+            // --- 1. Sistema de "Mount on Scroll" (IntersectionObserver) ---
+            // Solo renderiza el HTML complejo cuando el usuario se acerca
             const lazyPlaceholders = document.querySelectorAll('.lazy-placeholder');
             
             if ('IntersectionObserver' in window) {
@@ -745,22 +830,22 @@
                             const placeholder = entry.target;
                             const template = placeholder.querySelector('template');
                             if (template) {
-                                // Clonación eficiente
+                                // Clonar e inyectar
                                 const clone = template.content.cloneNode(true);
                                 placeholder.parentNode.insertBefore(clone, placeholder);
                                 template.remove();
-                                placeholder.remove();
+                                placeholder.remove(); // Eliminar el wrapper vacío
                             }
                             observer.unobserve(placeholder);
                         }
                     });
                 }, {
-                    rootMargin: '300px 0px' // Aumentado para mayor fluidez
+                    rootMargin: '200px 0px' // Precarga 200px antes de llegar
                 });
 
                 lazyPlaceholders.forEach(p => sectionObserver.observe(p));
             } else {
-                // Fallback legado
+                // Fallback para navegadores antiguos: carga todo de golpe
                 lazyPlaceholders.forEach(p => {
                     const template = p.querySelector('template');
                     if(template) {
@@ -770,40 +855,45 @@
                 });
             }
 
-			// --- 2. Canvas Optimizado para Mobile ---
+			// --- 2. Canvas Defer & Idle Load ---
 			const initCanvas = () => {
 			  const canvas = document.getElementById("trading-canvas");
 			  if (!canvas) return;
 
-              // REGLA DE ACCESIBILIDAD: Si el usuario prefiere movimiento reducido, no animamos.
-              const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-              if (prefersReducedMotion) return;
-
 			  const ctx = canvas.getContext("2d", { alpha: true });
-              
-              // DETECCIÓN DE MÓVIL
-              const isMobile = window.innerWidth < 768;
 
-			  // CONFIGURACIÓN DE RENDIMIENTO
-			  const TARGET_FPS = 24; // Reducido ligeramente para liberar CPU
+			  // ====== TUNING (lo que querías) ======
+			  const TARGET_FPS = 21;
 			  const FRAME_MS = 1000 / TARGET_FPS;
-			  const RENDER_SCALE = isMobile ? 0.35 : 0.3; // Calidad más baja en móvil es aceptable
-			  const DPR_CAP = isMobile ? 1.0 : 1.25; // CAP de retina desactivado en móvil
-			  
-              // DENSIDAD DE PARTÍCULAS
-			  const DENSITY = isMobile ? 0.8 : 1.6; // Mitad de partículas en móvil
 
-			  let viewW = 0, viewH = 0;
-			  let renderScale = 1;
+			  // Render interno más bajo -> se escala por CSS (menos costo)
+			  // 0.35–0.55 suele verse bien en fondos. Probá 0.4 primero.
+			  const RENDER_SCALE = 0.3;
+
+			  // Cap de DPR para que no explote en pantallas retina
+			  const DPR_CAP = 1.25; // si querés un toque más nítido: 1.25
+
+			  // Más velas: multiplica la cantidad base
+			  const DENSITY = 1.6; // subí a 1.8 o 2.0 si querés más
+
+			  // ====================================
+
+			  let viewW = 0, viewH = 0;      // tamaño en CSS px (lo que “ves”)
+			  let renderScale = 1;           // escala real usada en ctx
 			  let greenCandles = [], redCandles = [];
 			  let animationId;
 			  let isPageVisible = true;
+
+			  // Throttle FPS
 			  let lastFrameTs = 0;
 			  let lastTs = 0;
 
 			function resize() {
-			  viewW = window.innerWidth;
-			  viewH = window.innerHeight;
+			  const viewportH = window.innerHeight;
+			  const viewportW = window.innerWidth;
+
+			  viewW = viewportW;
+			  viewH = viewportH;
 
 			  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
 			  renderScale = dpr * RENDER_SCALE;
@@ -811,12 +901,14 @@
 			  canvas.width  = Math.floor(viewW * renderScale);
 			  canvas.height = Math.floor(viewH * renderScale);
 
-			  canvas.style.width  = "100%";
-			  canvas.style.height = "100%";
+			  canvas.style.width  = viewW + "px";
+			  canvas.style.height = viewH + "px";
 
 			  ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
+
 			  initCandles();
 			}
+
 
 			  class Candle {
 				constructor() { this.reset(true); }
@@ -824,7 +916,10 @@
 				reset(isFirst = false) {
 				  this.x = Math.random() * viewW;
 				  this.y = isFirst ? Math.random() * viewH : viewH + 100 * Math.random();
-				  this.speed = 30 * Math.random() + 20; 
+
+				  // Velocidad en px/seg (no por frame) para que 30fps se vea igual de fluido
+				  this.speed = 40 * Math.random() + 20; // 20–60 px/s
+
 				  this.scale = 0.6 * Math.random() + 0.4;
 				  this.bodyW = 8 * this.scale;
 				  this.bodyH = (30 * Math.random() + 10) * this.scale;
@@ -841,18 +936,22 @@
 			function initCandles() {
 			  greenCandles = [];
 			  redCandles = [];
-			  const AREA_DIVISOR = 14000;
-			  const total = Math.max(isMobile ? 40 : 100, Math.floor((viewW * viewH) / AREA_DIVISOR * DENSITY));
+
+			  // Densidad por área (consistente en cualquier viewport)
+			  const AREA_DIVISOR = 14000;   // más bajo = más velas (ej: 18000 menos, 12000 más)
+			  const total = Math.max(120, Math.floor((viewW * viewH) / AREA_DIVISOR * DENSITY));
 
 			  for (let i = 0; i < total; i++) {
 				const c = new Candle();
 				Math.random() > 0.4 ? greenCandles.push(c) : redCandles.push(c);
 			  }
-			}
+			  }
 
 			  function drawBatch(arr, color, dt) {
 				ctx.fillStyle = color;
 				ctx.strokeStyle = color;
+
+				// Wick (líneas)
 				ctx.beginPath();
 				for (const a of arr) {
 				  a.update(dt);
@@ -860,6 +959,8 @@
 				  ctx.lineTo(a.x, a.y + a.bodyH + a.wickBottom);
 				}
 				ctx.stroke();
+
+				// Body (rectángulos)
 				ctx.beginPath();
 				for (const a of arr) {
 				  ctx.rect(a.x - a.bodyW / 2, a.y, a.bodyW, a.bodyH);
@@ -869,6 +970,8 @@
 
 			  function animate(ts) {
 				if (!isPageVisible) return;
+
+				// Throttle a 30fps
 				if (!lastFrameTs) lastFrameTs = ts;
 				if (ts - lastFrameTs < FRAME_MS) {
 				  animationId = requestAnimationFrame(animate);
@@ -876,25 +979,31 @@
 				}
 				lastFrameTs = ts;
 
+				// Delta time para animación consistente
 				if (!lastTs) lastTs = ts;
-				const dt = Math.min(0.05, (ts - lastTs) / 1000);
+				const dt = Math.min(0.05, (ts - lastTs) / 1000); // clamp para evitar saltos
 				lastTs = ts;
 
+				// Limpieza en coordenadas CSS px (porque setTransform ya escala)
 				ctx.clearRect(0, 0, viewW, viewH);
+
 				drawBatch(greenCandles, "#22c55e", dt);
 				drawBatch(redCandles, "#ef4444", dt);
 
 				animationId = requestAnimationFrame(animate);
 			  }
 
+			  // Resize con debounce
 			  window.addEventListener("resize", () => {
 				clearTimeout(window.resizeTimer);
-				window.resizeTimer = setTimeout(resize, 200); // Debounce más agresivo
-			  }, { passive: true }); // Passive listener
+				window.resizeTimer = setTimeout(resize, 120);
+			  });
 
+			  // Ahorrar CPU si la pestaña está oculta
 			  document.addEventListener("visibilitychange", () => {
 				isPageVisible = !document.hidden;
 				if (isPageVisible) {
+				  // resetea timestamps para evitar “saltos”
 				  lastFrameTs = 0;
 				  lastTs = 0;
 				  animationId = requestAnimationFrame(animate);
@@ -907,7 +1016,8 @@
 			  animationId = requestAnimationFrame(animate);
 			};
 
-            // Iniciar canvas solo cuando el hilo principal esté libre
+
+            // Ejecutar canvas cuando el navegador esté libre
 			if ("requestIdleCallback" in window) {
 			  requestIdleCallback(() => initCanvas());
 			} else {
@@ -915,57 +1025,81 @@
 			}
         });
 
-        // --- 3. Lógica IA (Optimizada) ---
+// --- 3. Lógica IA (Mantenida igual) ---
+
+		// ✅ Helper FUERA de analyzeMarket (NO toca tu prompt)
 		function renderAIResponse(text) {
 		  const clean = String(text || "").replace(/\*\*/g, "");
+
 		  const get = (label) => {
 			const match = clean.match(new RegExp(label + ":([^\\n]+)", "i"));
 			return match ? match[1].trim() : "";
 		  };
+
 		  document.getElementById("ai-product").innerText = get("Producto recomendado");
 		  document.getElementById("ai-why").innerText = get("Por qué");
 		  document.getElementById("ai-when").innerText = get("Cuándo conviene");
 		  document.getElementById("ai-risk").innerText = get("Nota de riesgo");
+
 		  document.getElementById("ai-result").classList.remove("hidden");
 		}
 
 		async function analyzeMarket() {
+		  // Verificar si marked cargó (por defer)  ✅ lo dejo como lo tenías
 		  if (typeof marked === "undefined") {
-			alert("Cargando módulos... por favor espera un instante.");
+			alert("El módulo de IA se está cargando. Intenta de nuevo en unos segundos.");
 			return;
 		  }
+
 		  const t = document.getElementById("market-input").value;
 		  const e = document.getElementById("ai-result");
 		  const n = document.getElementById("analyze-btn");
 
 		  if (!t.trim()) return;
 
-		  n.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analizando...';
+		  n.innerHTML =
+			'<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Analizando...';
 		  n.disabled = true;
 
+		  // ✅ tu prompt (NO modificado)
 		  const o = `Eres un asistente experto en trading algorítmico y gestión de riesgo.
 							Tu objetivo es recomendar el producto de OneUp Trading que mejor encaje con la situación del usuario, sin prometer resultados.
-							Escenario del usuario: "${t}"
+
+							Escenario del usuario:
+							"${t}"
+
 							PRODUCTOS DISPONIBLES (elige SOLO UNO):
 							- Musahi → Breakout / Momentum intradía (volatilidad media/alta, tendencia, rupturas).
 							- NebulaX → Mean Reversion (rangos, sobreextensión, volatilidad baja/moderada).
 							- RiskForge → Gestión de riesgo y portafolio (calcular riesgo para acada trade, es solo un bot para leer operaciones ya que no opera).
+
 							REGLAS DE DECISIÓN:
 							- Si el foco es mercado/entradas, FTMO, prop firms → Musahi o NebulaX según contexto.
 							- Si el foco es gestion de riesgo, drawdown o crear un portafolio → RiskForge.
 							- Si el input es corto o ambiguo, da una recomendación clara sin pedir más datos.
+
 							FORMATO DE SALIDA (OBLIGATORIO):
 							Responde en Markdown usando EXACTAMENTE esta estructura y emojis:
+
 							---
+
 							🧠 Producto recomendado: **<Musahi | NebulaX | RiskForge>**
+
 							📌 Por qué: Explicación breve y directa basada en el escenario.
+
 							📈 Cuándo conviene: Situación típica donde este producto encaja mejor.
+
 							⚠️ Nota de riesgo: Recordatorio breve: demo primero, sin promesas, gestión de riesgo.
+
 							---
+
 							REGLAS DE ESTILO:
 							- Idioma: el mismo del usuario.
 							- Frases cortas, sin párrafos largos.
-							- Máximo 70–90 palabras.`;
+							- Máximo 70–90 palabras.
+							- No lenguaje técnico innecesario.
+							- No prometer resultados ni dar asesoramiento financiero.
+							`;
 
 		  try {
 			const s = await fetch("/api/gemini", {
@@ -973,123 +1107,296 @@
 			  headers: { "Content-Type": "application/json" },
 			  body: JSON.stringify({ prompt: o }),
 			});
+
 			let r = {};
-			try { r = await s.json(); } catch (_) { r = {}; }
+			try {
+			  r = await s.json();
+			} catch (_) {
+			  r = {};
+			}
+
 			if (!s.ok) throw new Error(r.error || `Error HTTP ${s.status}`);
-			renderAIResponse(r.text || "No pude analizar el mercado en este momento.");
+			if (r.error) throw new Error(r.error);
+
+			const i = r.text || "No pude analizar el mercado en este momento.";
+
+			// ✅ NUEVO: render ordenado (reemplaza marked + ai-content)
+			renderAIResponse(i);
+
+			// Asegura mostrar contenedor resultado
 			e.classList.remove("hidden");
 		  } catch (err) {
-			renderAIResponse(`Producto recomendado: —\nPor qué: Error: ${err.message}\nCuándo conviene: —\nNota de riesgo: Probá de nuevo en unos segundos.`);
+			// ✅ NUEVO: error ordenado en tus bloques
+			renderAIResponse(
+			  `Producto recomendado: —
+		Por qué: Error: ${err.message}
+		Cuándo conviene: —
+		Nota de riesgo: Probá de nuevo en unos segundos.`
+			);
 			e.classList.remove("hidden");
 		  } finally {
-			n.innerHTML = '<span>Analizar Escenario</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+			n.innerHTML =
+			  '<span>Analizar Escenario</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
 			n.disabled = false;
 		  }
 		}
 
-        // --- 4. Scroll Helper ---
-		function scrollToDemo(e) {
+
+
+    </script>
+		<script>
+	function scrollToDemo(e) {
 		  if (e) e.preventDefault();
+
 		  const el = document.getElementById("demo-gratis");
 		  if (!el) return;
+
+		  // Espera a que el browser haga layout/pintado
 		  requestAnimationFrame(() => {
 			el.scrollIntoView({ behavior: "smooth", block: "start" });
 		  });
 	    }
 
-        // --- 5. Traducción Automática (Optimizada) ---
-	    (function () {
-          // Diccionario minimizado para el ejemplo (usar el completo en prod)
-		  const dictionary = {
-		    'Sistemas activos 24/7': 'Live systems 24/7',
-		    'Trading Algorítmico': 'Algorithmic Trading',
-            'de Alta Precisión': 'High Precision',
-            'Eliminá las emociones y operá con ventaja estadística.': 'Remove emotions and trade with statistical edge.',
-            'Desarrollamos bots de trading y sistemas cuantitativos para': 'We develop trading bots and quantitative systems for',
-            'y operar capital real.': 'and trading real capital.',
-            'Probar IA': 'Try AI',
-            'Demo Gratis': 'Free Demo',
-            // ... (Resto del diccionario original se asume implícito para ahorrar bytes en este bloque, 
-            // la lógica de reemplazo funciona igual)
-          };
-          // URL Map
-          const linkMap = {
+	(function () {
+	  function detectLanguage() {
+		try {
+          // 1. Referrer (si viene de Wix/iframe)
+		  const referrer = document.referrer || '';
+          // 2. URL actual (si se usa ?lang=en para probar)
+          const currentUrl = window.location.href;
+          
+          console.log("🔍 Debug Traducción - Referrer:", referrer);
+
+		  if (referrer.includes('en.oneuptrading.org') || currentUrl.includes('lang=en')) {
+            console.log("✅ Detectado Inglés -> Aplicando traducción y cambio de links...");
+			setEnglish();
+		  } else {
+            console.log("ℹ️ Detectado Español (Default)");
+			// setSpanish(); // Opcional
+		  }
+		} catch (e) {
+          console.error("⚠️ Error crítico en detección de idioma:", e);
+		}
+	  }
+
+	  function setEnglish() {
+		document.documentElement.lang = 'en';
+        
+        // 1. DICCIONARIO DE TEXTOS
+		const dictionary = {
+		  // --- HEADER & HERO ---
+		  'Sistemas activos 24/7': 'Live systems 24/7',
+		  'Trading Algorítmico': 'Algorithmic Trading',
+		  'de Alta Precisión': 'High Precision',
+		  'Eliminá las emociones y operá con ventaja estadística.': 'Remove emotions and trade with statistical edge.',
+          'Desarrollamos bots de trading y sistemas cuantitativos para': 'We develop trading bots and quantitative systems for',
+		  'y operar capital real.': 'and trading real capital.',
+		  'Probar IA': 'Try AI',
+		  'Demo Gratis': 'Free Demo',
+
+          // --- AI TOOL (NeuroTrade) ---
+          '¿No sabés qué sistema elegir? Analiza tu escenario y la IA te orienta hacia la mejor solución para vos.': 'Don\'t know which system to choose? Analyze your scenario and the AI guides you to the best solution for you.',
+          'Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown...': 'Ex: I have a funded account and want to pass the challenge with low drawdown...',
+          'Analizar Escenario': 'Analyze Scenario',
+          'Analizando.': 'Analyzing.',
+
+		  // --- SERVICIOS (General) ---
+		  'Nuestros Servicios': 'Our Services',
+          'Desarrollamos soluciones profesionales de trading algorítmico y gestión de riesgo.': 'We develop professional algorithmic trading and risk management solutions.',
+          'Ideal para:': 'Ideal for:',
+          'Incluye set inicial optimizado': 'Includes optimized initial set',
+          'Incluye Guia de instalacion': 'Includes Installation Guide',
+
+          // --- SERVICIO: MUSAHI ---
+          'Algoritmo de Breakout Intradía': 'Intraday Breakout Algorithm',
+          'Está diseñado para operar en prop firms, cumpliendo con las restricciones típicas de este tipo de cuentas, operando todos los dias.': 'Designed to operate in prop firms, complying with typical account restrictions, trading every day.',
+          'Estrategia de breakout intradía': 'Intraday breakout strategy',
+          'Opera entre 5 a 10 trades por semana': 'Trades 5 to 10 times per week',
+          'Challenges de prop firms y cuentas fondeadas': 'Prop firm challenges and funded accounts',
+          'Ver Musahi': 'View Musahi',
+
+          // --- SERVICIO: NEBULAX ---
+          'Estrategia Cuantitativa de Mean Reversion': 'Mean Reversion Quantitative Strategy',
+          'Pensada para swing trading, ideal para diversificar el portafolio y complementar sistemas de trading intradía.': 'Designed for swing trading, ideal for portfolio diversification and complementing intraday trading systems.',
+          'Estrategia de mean reversion cuantitativa': 'Quantitative mean reversion strategy',
+          'Baja correlación con sistemas de tendencia': 'Low correlation with trend systems',
+          'Traders de portafolio que buscan diversificación': 'Portfolio traders seeking diversification',
+          'Ver NebulaX': 'View NebulaX',
+
+          // --- SERVICIO: RISKFORGE ---
+          'Control Profesional de Riesgo para MT5': 'Professional Risk Control for MT5',
+          'Analiza la exposición total del portafolio en tiempo real y ayuda a tomar decisiones basadas en métricas objetivas.': 'Analyzes total portfolio exposure in real-time and helps take decisions based on objective metrics.',
+          'Gestión de riesgo a nivel portafolio': 'Portfolio-level risk management',
+          'Cálculo de Risk of Ruin (ROR) en tiempo real': 'Real-time Risk of Ruin (ROR) calculation',
+          'Control de exposición por activo y sistema': 'Exposure control by asset and system',
+          'Incluye configuración inicial': 'Includes initial configuration',
+          'Traders que gestionan múltiples EAs y cuentas': 'Traders managing multiple EAs and accounts',
+          'Ver RiskForge': 'View RiskForge',
+          
+          // --- OPTIMIZACIÓN DE SETS ---
+          'Servicio Premium': 'Premium Service',
+          'Optimización de Sets': 'Set Optimization',
+          'Mantén tu Edge Vivo': 'Keep Your Edge Alive',
+          'Los mercados son dinámicos y cambian constantemente. Un bot estático pierde eficacia con el tiempo. Nuestro servicio de optimización asegura que tus estrategias se adapten a la volatilidad y estructura del mercado actual.': 'Markets are dynamic and constantly changing. A static bot loses effectiveness over time. Our optimization service ensures your strategies adapt to current market volatility and structure.',
+          'Por qué ajustar': 'Why adjust',
+          'Adaptación a nuevos regímenes de volatilidad y correlaciones cambiantes.': 'Adaptation to new volatility regimes and changing correlations.',
+          'Cada cuánto': 'How often',
+          'Revisiones mensuales y actualizaciones de emergencia ante eventos cisne negro.': 'Monthly reviews and emergency updates for black swan events.',
+          'Qué incluye': 'What\'s included',
+          'Archivos .set actualizados, backtests verificados y soporte prioritario.': 'Updated .set files, verified backtests, and priority support.',
+          'Acceder a optimizaciones': 'Access optimizations',
+          'Consultar disponibilidad': 'Check availability',
+
+          // --- DEMO ---
+          '¿Querés probarlo por vos mismo?': 'Want to try it yourself?',
+          'Evaluá el rendimiento del bot con nuestra demo gratuita para backtesting y analizá su comportamiento antes de operar capital real.': 'Evaluate the bot performance with our free backtesting demo and analyze behavior before trading real capital.',
+          'Obtener Demo Gratis': 'Get Free Demo',
+
+          // --- 4 PASOS ---
+          'Tu Camino al Éxito en 4 Pasos': 'Your Path to Success in 4 Steps',
+          'Acceso Inmediato': 'Immediate Access',
+          'Compra tu licencia segura a través del mercado oficial de MQL5 y descarga al instante.': 'Buy your secure license via the official MQL5 market and download instantly.',
+          'Instalación Simple': 'Simple Installation',
+          'Abre tu MetaTrader 5 y encuentra el bot en tu navegador. Arrástralo al gráfico.': 'Open MetaTrader 5, find the bot in your navigator, and drag it to the chart.',
+          'Carga el Edge': 'Load the Edge',
+          'Carga el archivo': 'Load the file',
+          'incluido para aplicar nuestra configuración institucional.': 'included to apply our institutional configuration.',
+          'Operativa Auto': 'Auto Trading',
+          'Activa el botón "Algo Trading", relájate y deja que el algoritmo haga su trabajo.': 'Activate the "Algo Trading" button, relax, and let the algorithm do its work.',
+		  
+		  // --- SECCIÓN: TESTIMONIOS (Completos) ---
+		  'Lo que dicen nuestros traders': 'What our traders say',
+		  'Testimonios reales de usuarios de': 'Real testimonials from users of',
+          'Excelente herramienta completamente automatizada, con la oportunidad de poder crear nuevos set en otros pares cambiando los parámetros. Gracias a esta herramienta puedo trabajar de forma manual en otras cuentas a la vez que trabaja el bot de forma independiente. El autor ofrece soporte para dudas o sugerencias y es muy atento, enviando set actualizados y nuevas funciones.': 'Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters. Thanks to this tool I can work manually on other accounts while the bot works independently. The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.',
+          'Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.': 'A great and reliable robot, and the creator is a very attentive person. Delighted with the purchase, thank you very much.',
+
+          // --- CERTIFICADOS ---
+		  'Dominando las': 'Mastering',
+          'Firmas de Fondeo': 'Prop Firms',
+          'Resultados Verificados': 'Verified Results',
+          'Nuestros algoritmos no solo funcionan en backtest. Han superado múltiples evaluaciones y gestionan capital real. La consistencia es nuestra mejor garantía.': 'Our algorithms don\'t just work in backtests. They have passed multiple evaluations and manage real capital. Consistency is our best guarantee.',
+          'Verificado': 'Verified',
+          'Resultados obtenidos operando con Musahi, NebulaX y RiskForge bajo reglas estrictas de prop firms.': 'Results obtained trading with Musahi, NebulaX, and RiskForge under strict prop firm rules.',
+
+          // --- TRACK RECORD (Darwinex) ---
+		  'Resultados': 'Results',
+		  'Verificados': 'Verified',
+          'No solo lo decimos, lo demostramos. Nuestra estrategia': 'We don\'t just say it, we prove it. Our strategy',
+          'está auditada en tiempo real por Darwinex Zero, garantizando transparencia total en cada operación.': 'is audited in real-time by Darwinex Zero, guaranteeing total transparency in every trade.',
+          'Activo en Darwinex Zero': 'Active on Darwinex Zero',
+          'Algorítmico': 'Algorithmic',
+          'Auditado': 'Audited',
+          'Retorno Total': 'Total Return',
+          'Subiendo': 'Rising',
+          'Crecimiento constante bajo gestión de riesgo.': 'Constant growth under risk management.',
+          'Max Drawdown': 'Max Drawdown',
+          'Tiempo': 'Time',
+          'Meses': 'Months',
+          'Rating': 'Rating',
+          '*Los resultados pasados no garantizan rendimientos futuros.': '*Past results do not guarantee future returns.',
+          'Ver Análisis Completo': 'View Full Analysis',
+
+		  // --- YOUTUBE & COMUNIDAD ---
+		  'Resultados de la Comunidad': 'Community Results',
+		  'Capturas reales compartidas por nuestros miembros en el canal oficial.': 'Real screenshots shared by our members in the official channel.',
+		  'Ver en Telegram': 'View on Telegram',
+		  'Ver más resultados en Telegram': 'See more results on Telegram',
+		  'Mira cómo operamos en': 'Watch how we trade on',
+		  'En Vivo / Tutorial': 'Live / Tutorial',
+		  'Descubre la lógica y el razonamiento detrás de nuestros algoritmos de trading. En el canal compartimos análisis reales, resultados documentados y explicaciones claras sobre cómo funcionan nuestras estrategias en condiciones de mercado reales.': 'Discover the logic and reasoning behind our trading algorithms. On the channel, we share real analysis, documented results, and clear explanations of how our strategies work in real market conditions.',
+		  'Ver Canal': 'Visit Channel',
+
+		  // --- CTA FINAL ---
+		  'Da el siguiente paso con un': 'Take the next step with a',
+		  'sistema de trading profesional': 'professional trading system',
+		  'Elige el algoritmo que mejor se adapte a tu forma de operar,': 'Choose the algorithm that best fits your trading style,',
+          'con reglas claras, riesgo controlado y un enfoque pensado para traders reales.': 'with clear rules, controlled risk, and an approach designed for real traders.',
+		  'Ver Sistemas de Trading': 'View Trading Systems',
+		  'Comparar Sistemas': 'Compare Systems',
+          'Sin promesas irreales. Sin gestión discrecional.': 'No unrealistic promises. No discretionary management.',
+          'Solo sistemas diseñados con lógica, control y disciplina.': 'Only systems designed with logic, control, and discipline.'
+		};
+        
+        // 2. MAPEO DE LINKS (URLs)
+        // Aquí definimos qué links cambian cuando está en inglés
+        const linkMap = {
             'https://www.oneuptrading.org/set': 'https://en.oneuptrading.org/set',
             'https://www.oneuptrading.org/demo-gratis': 'https://en.oneuptrading.org/demo-gratis'
-          };
+        };
 
-	      function detectLanguage() {
-		    try {
-              // Detección basada en Referrer (Wix) o Query Param
-		      const referrer = document.referrer || '';
-              const currentUrl = window.location.href;
-		      if (referrer.includes('en.oneuptrading.org') || currentUrl.includes('lang=en')) {
-			    setEnglish();
-		      }
-		    } catch (e) { console.error(e); }
-	      }
+        // Ejecutar traducciones
+        translateSafe(dictionary);
+        updateLinksSafe(linkMap);
+	  }
 
-	      function setEnglish() {
-		    document.documentElement.lang = 'en';
-            translateSafe(dictionary);
-            updateLinksSafe(linkMap);
-	      }
-
-          // Optimización: Solo recorre nodos de texto si no estamos en carga lazy masiva
-	      function translateSafe(map) {
-            // A. Traducir el DOM visible actual
-            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            while (node = walker.nextNode()) {
-                let text = node.nodeValue;
-                if (text.trim().length > 0) {
-                    let replaced = false;
-                    Object.entries(map).forEach(([es, en]) => {
-                        if (text.includes(es)) {
-                            text = text.replace(es, en);
-                            replaced = true;
-                        }
-                    });
-                    if (replaced) node.nodeValue = text;
-                }
-            }
-            // B. Traducir Templates (Esto es eficiente porque manipula strings antes de insertar al DOM)
-            document.querySelectorAll('template').forEach(tmpl => {
-                let html = tmpl.innerHTML;
+      // Función para traducir texto (sin romper eventos/canvas)
+	  function translateSafe(map) {
+        // A. Nodos de Texto visibles
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        while (node = walker.nextNode()) {
+            let text = node.nodeValue;
+            if (text.trim().length > 0) {
                 let replaced = false;
                 Object.entries(map).forEach(([es, en]) => {
-                    if (html.includes(es)) {
-                        html = html.replaceAll(es, en);
+                    if (text.includes(es)) {
+                        text = text.replace(es, en);
                         replaced = true;
                     }
                 });
-                if (replaced) tmpl.innerHTML = html;
-            });
-	      }
+                if (replaced) node.nodeValue = text;
+            }
+        }
 
-          function updateLinksSafe(map) {
+        // B. Contenido dentro de <template> (Lazy Loading)
+        document.querySelectorAll('template').forEach(tmpl => {
+            let html = tmpl.innerHTML;
+            let replaced = false;
+            Object.entries(map).forEach(([es, en]) => {
+                if (html.includes(es)) {
+                    html = html.replaceAll(es, en);
+                    replaced = true;
+                }
+            });
+            if (replaced) tmpl.innerHTML = html;
+        });
+	  }
+
+      // Función para actualizar Links (HREF)
+      function updateLinksSafe(map) {
+        // A. Links en el DOM activo (visible)
+        Object.entries(map).forEach(([oldUrl, newUrl]) => {
+            // Buscamos links que tengan EXACTAMENTE esa URL
+            const links = document.querySelectorAll(`a[href="${oldUrl}"]`);
+            links.forEach(link => {
+                link.href = newUrl;
+            });
+        });
+
+        // B. Links dentro de <template> (Lazy Loading)
+        // Como 'translateSafe' ya opera sobre el innerHTML de los templates,
+        // podemos hacer un reemplazo de string directo aquí también.
+        document.querySelectorAll('template').forEach(tmpl => {
+            let html = tmpl.innerHTML;
+            let replaced = false;
             Object.entries(map).forEach(([oldUrl, newUrl]) => {
-                document.querySelectorAll(`a[href="${oldUrl}"]`).forEach(link => link.href = newUrl);
+                if (html.includes(oldUrl)) {
+                    html = html.replaceAll(oldUrl, newUrl);
+                    replaced = true;
+                }
             });
-            document.querySelectorAll('template').forEach(tmpl => {
-                let html = tmpl.innerHTML;
-                let replaced = false;
-                Object.entries(map).forEach(([oldUrl, newUrl]) => {
-                    if (html.includes(oldUrl)) {
-                        html = html.replaceAll(oldUrl, newUrl);
-                        replaced = true;
-                    }
-                });
-                if (replaced) tmpl.innerHTML = html;
-            });
-          }
+            if (replaced) tmpl.innerHTML = html;
+        });
+      }
 
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', detectLanguage);
-          } else {
-            detectLanguage();
-          }
-	    })();
+	  // Ejecutar al cargar
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', detectLanguage);
+      } else {
+        detectLanguage();
+      }
+	})();
 	</script>
 </body>
 </html>
+
