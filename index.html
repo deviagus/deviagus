@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Sistemas de trading algorítmico profesional con estrategias automatizadas, control de riesgo avanzado y configuraciones institucionales optimizadas.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestros Servicios - Trading Algorítmico</title>
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://static.wixstatic.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://static.wixstatic.com">
     <style id="critical-css">
         body {
             background-color: #051a12;
@@ -81,6 +83,22 @@
         .lazy-placeholder {
             min-height: 300px; /* Evita colapso total */
             display: block;
+        }
+        
+        /* Mejoras responsive y anti-CLS */
+        * { box-sizing: border-box; }
+        
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.75rem) !important;
+        }
+        
+        .hero-desc {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+        }
+        
+        /* Optimización de will-change para animaciones */
+        .btn-primary, .btn-secondary {
+            will-change: transform;
         }
     </style>
 
@@ -178,7 +196,7 @@
 <!-- Body con CSS inline mínimo para asegurar color de fondo inmediato -->
 <body class="bg-pagebg text-white font-sans antialiased relative pt-20" style="background-color: #051a12;">   
     <!-- DEFER CANVAS: Se inicializa vía JS más abajo -->
-    <canvas id="trading-canvas"></canvas>
+    <canvas id="trading-canvas" aria-hidden="true"></canvas>
     <!-- HEADER / HERO (RENDERIZADO INMEDIATO) 
          Este contenido es visible al instante gracias al Critical CSS y no está oculto.
     -->
@@ -262,7 +280,6 @@
 
 					  </div>
 					</div>
-
 
 				  </div>
 				</div>
@@ -524,7 +541,7 @@
                         <div class="relative bg-[#062115] p-8 md:p-10 rounded-3xl">
                             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 pb-6 border-b border-[#1c4a36]">
                                 <div class="flex items-center gap-4 mb-4 md:mb-0">
-                                    <div class="w-14 h-14 bg-[#0A3221] rounded-xl overflow-hidden border border-[#1c4a36] shadow-inner relative group-hover:border-emerald-500/50 transition-colors"><img src="https://static.wixstatic.com/media/f5eb50_416ca84c116d4b26b33a2b9fbcb3cf6c~mv2.png" loading="lazy" decoding="async" alt="Darwin Logo" class="w-full h-full object-cover p-0.5"></div>
+                                    <div class="w-14 h-14 bg-[#0A3221] rounded-xl overflow-hidden border border-[#1c4a36] shadow-inner relative group-hover:border-emerald-500/50 transition-colors"><img src="https://static.wixstatic.com/media/f5eb50_416ca84c116d4b26b33a2b9fbcb3cf6c~mv2.png" loading="lazy" decoding="async" alt="Darwin Logo" class="w-full h-full object-cover p-0.5" width="360" height="270"></div>
                                     <div>
                                         <h3 class="text-2xl font-bold text-white">DARWIN <span class="text-emerald-400">XPJA</span></h3>
                                         <p class="text-sm text-gray-400 flex items-center gap-2"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>Activo en Darwinex Zero</p>
@@ -673,7 +690,7 @@
                         <!-- Imagen V1 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_2d9fc60986fd48b7afc755151f1e489a~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_2d9fc60986fd48b7afc755151f1e489a~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -683,7 +700,7 @@
                         <!-- Imagen V2 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_e18db895582c4c7fb168d1f2e36f8f57~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_e18db895582c4c7fb168d1f2e36f8f57~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -693,7 +710,7 @@
                         <!-- Imagen V3 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_2b70b2d40caa47759d793005f7d37e38~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 3" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_2b70b2d40caa47759d793005f7d37e38~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 3" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -703,7 +720,7 @@
                         <!-- Imagen V4 -->
                         <div class="col-span-1 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[2/4] overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_3811842fc7a34d6ab5ca82d86054cc64~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 4" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_3811842fc7a34d6ab5ca82d86054cc64~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Vertical 4" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -715,7 +732,7 @@
                         <!-- Imagen H1 -->
                         <div class="col-span-2 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-video overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_6695333b70214b2b939acad181922c01~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_6695333b70214b2b939acad181922c01~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -725,7 +742,7 @@
                         <!-- Imagen H2 -->
                         <div class="col-span-2 group relative overflow-hidden rounded-xl border border-bordercolor bg-cardbg hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-video overflow-hidden cursor-pointer">
-                                <img src="https://static.wixstatic.com/media/f5eb50_93aefb61a9a74c39a3a601eaddfaac99~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100">
+                                <img src="https://static.wixstatic.com/media/f5eb50_93aefb61a9a74c39a3a601eaddfaac99~mv2.png" decoding="async" loading="lazy" alt="Testimonio Telegram Horizontal 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 opacity-90 group-hover:opacity-100" width="360" height="270">
                             </div>
                             <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p class="text-xs text-white text-center font-medium">Ver en Telegram</p>
@@ -818,7 +835,43 @@
     <!-- LOGICA: LAZY MOUNT & OPTIMIZED JS -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
+
+            // SAFEGUARD: Asegurar que scroll a secciones funcione incluso si no están montadas
+            document.body.addEventListener('click', function(e) {
+                const target = e.target.closest('a[href^="#"]');
+                if (!target) return;
+                
+                const href = target.getAttribute('href');
+                if (!href || href === '#') return;
+                
+                e.preventDefault();
+                
+                const targetId = href.slice(1);
+                let targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    // Forzar mount de todas las secciones lazy
+                    console.warn('[Scroll] Sección no montada:', targetId, '- Forzando carga...');
+                    lazyPlaceholders.forEach(p => {
+                        const template = p.querySelector('template');
+                        if (template) {
+                            p.parentNode.insertBefore(template.content.cloneNode(true), p);
+                            p.remove();
+                        }
+                    });
+                    
+                    // Reintentar scroll
+                    setTimeout(() => {
+                        targetEl = document.getElementById(targetId);
+                        if (targetEl) {
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 100);
+                }
+            }, { passive: false });
+
             // --- 1. Sistema de "Mount on Scroll" (IntersectionObserver) ---
             // Solo renderiza el HTML complejo cuando el usuario se acerca
             const lazyPlaceholders = document.querySelectorAll('.lazy-placeholder');
@@ -840,7 +893,7 @@
                         }
                     });
                 }, {
-                    rootMargin: '200px 0px' // Precarga 200px antes de llegar
+                    rootMargin: '300px 0px 300px 0px' // Precarga 200px antes de llegar
                 });
 
                 lazyPlaceholders.forEach(p => sectionObserver.observe(p));
@@ -857,165 +910,164 @@
 
 			// --- 2. Canvas Defer & Idle Load ---
 			const initCanvas = () => {
-			  const canvas = document.getElementById("trading-canvas");
-			  if (!canvas) return;
+                  // Detección de dispositivo y preferencias
+                  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+                  const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+                  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                  
+                  // Skip canvas en mobile con reduced motion
+                  if (isMobile && prefersReducedMotion) {
+                      console.log('[Perf] Canvas desactivado: mobile + reduced-motion');
+                      return;
+                  }
+                  
+                  const canvas = document.getElementById("trading-canvas");
+                  if (!canvas) return;
 
-			  const ctx = canvas.getContext("2d", { alpha: true });
+                  const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
 
-			  // ====== TUNING (lo que querías) ======
-			  const TARGET_FPS = 21;
-			  const FRAME_MS = 1000 / TARGET_FPS;
+                  // ====== CONFIGURACIÓN ADAPTATIVA ======
+                  let TARGET_FPS, RENDER_SCALE, DENSITY, DPR_CAP;
+                  
+                  if (isMobile) {
+                      TARGET_FPS = 15;
+                      RENDER_SCALE = 0.25;
+                      DENSITY = 0.8;
+                      DPR_CAP = 1;
+                  } else if (isTablet) {
+                      TARGET_FPS = 20;
+                      RENDER_SCALE = 0.35;
+                      DENSITY = 1.2;
+                      DPR_CAP = 1.25;
+                  } else {
+                      TARGET_FPS = 30;
+                      RENDER_SCALE = 0.4;
+                      DENSITY = 1.6;
+                      DPR_CAP = 1.5;
+                  }
 
-			  // Render interno más bajo -> se escala por CSS (menos costo)
-			  // 0.35–0.55 suele verse bien en fondos. Probá 0.4 primero.
-			  const RENDER_SCALE = 0.3;
+                  const FRAME_MS = 1000 / TARGET_FPS;
 
-			  // Cap de DPR para que no explote en pantallas retina
-			  const DPR_CAP = 1.25; // si querés un toque más nítido: 1.25
+                  let viewW = 0, viewH = 0;
+                  let renderScale = 1;
+                  let greenCandles = [], redCandles = [];
+                  let animationId;
+                  let isPageVisible = true;
+                  let lastFrameTs = 0;
+                  
+                  // Pausar cuando la pestaña no está visible
+                  document.addEventListener('visibilitychange', () => {
+                      isPageVisible = !document.hidden;
+                      if (!isPageVisible && animationId) {
+                          cancelAnimationFrame(animationId);
+                          animationId = null;
+                      } else if (isPageVisible && !animationId) {
+                          lastFrameTs = performance.now();
+                          animate(lastFrameTs);
+                      }
+                  }, { passive: true });
 
-			  // Más velas: multiplica la cantidad base
-			  const DENSITY = 1.6; // subí a 1.8 o 2.0 si querés más
+                function resize() {
+                  const viewportH = window.innerHeight;
+                  const viewportW = window.innerWidth;
 
-			  // ====================================
+                  viewW = viewportW;
+                  viewH = viewportH;
 
-			  let viewW = 0, viewH = 0;      // tamaño en CSS px (lo que “ves”)
-			  let renderScale = 1;           // escala real usada en ctx
-			  let greenCandles = [], redCandles = [];
-			  let animationId;
-			  let isPageVisible = true;
+                  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+                  renderScale = dpr * RENDER_SCALE;
 
-			  // Throttle FPS
-			  let lastFrameTs = 0;
-			  let lastTs = 0;
+                  canvas.width  = Math.floor(viewW * renderScale);
+                  canvas.height = Math.floor(viewH * renderScale);
 
-			function resize() {
-			  const viewportH = window.innerHeight;
-			  const viewportW = window.innerWidth;
+                  canvas.style.width  = viewW + "px";
+                  canvas.style.height = viewH + "px";
 
-			  viewW = viewportW;
-			  viewH = viewportH;
+                  ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
 
-			  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
-			  renderScale = dpr * RENDER_SCALE;
+                  initCandles();
+                }
 
-			  canvas.width  = Math.floor(viewW * renderScale);
-			  canvas.height = Math.floor(viewH * renderScale);
+                  class Candle {
+                    constructor() { this.reset(true); }
 
-			  canvas.style.width  = viewW + "px";
-			  canvas.style.height = viewH + "px";
+                    reset(isFirst = false) {
+                      this.x = Math.random() * viewW;
+                      this.y = isFirst ? Math.random() * viewH : viewH + 100 * Math.random();
+                      this.speed = 40 * Math.random() + 20;
+                      this.scale = 0.6 * Math.random() + 0.4;
+                      this.bodyW = 8 * this.scale;
+                      this.bodyH = (30 * Math.random() + 10) * this.scale;
+                      this.wickTop = (15 * Math.random() + 5) * this.scale;
+                      this.wickBottom = (15 * Math.random() + 5) * this.scale;
+                    }
 
-			  ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
+                    update(dt) {
+                      this.y -= this.speed * dt;
+                      if (this.y < -120) this.reset(false);
+                    }
+                  }
 
-			  initCandles();
-			}
+                function initCandles() {
+                  greenCandles = [];
+                  redCandles = [];
 
+                  const AREA_DIVISOR = 14000;
+                  const total = Math.max(100, Math.floor((viewW * viewH) / AREA_DIVISOR * DENSITY));
 
-			  class Candle {
-				constructor() { this.reset(true); }
+                  for (let i = 0; i < total; i++) {
+                    const c = new Candle();
+                    Math.random() > 0.4 ? greenCandles.push(c) : redCandles.push(c);
+                  }
+                  }
 
-				reset(isFirst = false) {
-				  this.x = Math.random() * viewW;
-				  this.y = isFirst ? Math.random() * viewH : viewH + 100 * Math.random();
+                  function drawBatch(arr, color, dt) {
+                    ctx.fillStyle = color;
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 1.5;
 
-				  // Velocidad en px/seg (no por frame) para que 30fps se vea igual de fluido
-				  this.speed = 40 * Math.random() + 20; // 20–60 px/s
+                    ctx.beginPath();
+                    for (const a of arr) {
+                      a.update(dt);
+                      ctx.moveTo(a.x, a.y - a.wickTop);
+                      ctx.lineTo(a.x, a.y + a.bodyH + a.wickBottom);
+                    }
+                    ctx.stroke();
 
-				  this.scale = 0.6 * Math.random() + 0.4;
-				  this.bodyW = 8 * this.scale;
-				  this.bodyH = (30 * Math.random() + 10) * this.scale;
-				  this.wickTop = (15 * Math.random() + 5) * this.scale;
-				  this.wickBottom = (15 * Math.random() + 5) * this.scale;
-				}
+                    for (const a of arr) {
+                      ctx.fillRect(a.x - a.bodyW / 2, a.y, a.bodyW, a.bodyH);
+                    }
+                  }
 
-				update(dt) {
-				  this.y -= this.speed * dt;
-				  if (this.y < -120) this.reset(false);
-				}
-			  }
+                  function animate(ts) {
+                    if (!isPageVisible) return;
+                    
+                    const elapsed = ts - lastFrameTs;
+                    if (elapsed < FRAME_MS) {
+                      animationId = requestAnimationFrame(animate);
+                      return;
+                    }
 
-			function initCandles() {
-			  greenCandles = [];
-			  redCandles = [];
+                    lastFrameTs = ts - (elapsed % FRAME_MS);
+                    const dt = elapsed / 1000;
 
-			  // Densidad por área (consistente en cualquier viewport)
-			  const AREA_DIVISOR = 14000;   // más bajo = más velas (ej: 18000 menos, 12000 más)
-			  const total = Math.max(120, Math.floor((viewW * viewH) / AREA_DIVISOR * DENSITY));
+                    ctx.clearRect(0, 0, viewW, viewH);
+                    drawBatch(greenCandles, "rgba(34, 197, 94, 0.3)", dt);
+                    drawBatch(redCandles, "rgba(239, 68, 68, 0.3)", dt);
 
-			  for (let i = 0; i < total; i++) {
-				const c = new Candle();
-				Math.random() > 0.4 ? greenCandles.push(c) : redCandles.push(c);
-			  }
-			  }
+                    animationId = requestAnimationFrame(animate);
+                  }
 
-			  function drawBatch(arr, color, dt) {
-				ctx.fillStyle = color;
-				ctx.strokeStyle = color;
+                  resize();
+                  window.addEventListener("resize", resize, { passive: true });
 
-				// Wick (líneas)
-				ctx.beginPath();
-				for (const a of arr) {
-				  a.update(dt);
-				  ctx.moveTo(a.x, a.y - a.wickTop);
-				  ctx.lineTo(a.x, a.y + a.bodyH + a.wickBottom);
-				}
-				ctx.stroke();
-
-				// Body (rectángulos)
-				ctx.beginPath();
-				for (const a of arr) {
-				  ctx.rect(a.x - a.bodyW / 2, a.y, a.bodyW, a.bodyH);
-				}
-				ctx.fill();
-			  }
-
-			  function animate(ts) {
-				if (!isPageVisible) return;
-
-				// Throttle a 30fps
-				if (!lastFrameTs) lastFrameTs = ts;
-				if (ts - lastFrameTs < FRAME_MS) {
-				  animationId = requestAnimationFrame(animate);
-				  return;
-				}
-				lastFrameTs = ts;
-
-				// Delta time para animación consistente
-				if (!lastTs) lastTs = ts;
-				const dt = Math.min(0.05, (ts - lastTs) / 1000); // clamp para evitar saltos
-				lastTs = ts;
-
-				// Limpieza en coordenadas CSS px (porque setTransform ya escala)
-				ctx.clearRect(0, 0, viewW, viewH);
-
-				drawBatch(greenCandles, "#22c55e", dt);
-				drawBatch(redCandles, "#ef4444", dt);
-
-				animationId = requestAnimationFrame(animate);
-			  }
-
-			  // Resize con debounce
-			  window.addEventListener("resize", () => {
-				clearTimeout(window.resizeTimer);
-				window.resizeTimer = setTimeout(resize, 120);
-			  });
-
-			  // Ahorrar CPU si la pestaña está oculta
-			  document.addEventListener("visibilitychange", () => {
-				isPageVisible = !document.hidden;
-				if (isPageVisible) {
-				  // resetea timestamps para evitar “saltos”
-				  lastFrameTs = 0;
-				  lastTs = 0;
-				  animationId = requestAnimationFrame(animate);
-				} else {
-				  cancelAnimationFrame(animationId);
-				}
-			  });
-
-			  resize();
-			  animationId = requestAnimationFrame(animate);
-			};
-
+                  // Fade in suave
+                  requestAnimationFrame(() => {
+                      canvas.classList.add('loaded');
+                      lastFrameTs = performance.now();
+                      animate(lastFrameTs);
+                  });
+                };
 
             // Ejecutar canvas cuando el navegador esté libre
 			if ("requestIdleCallback" in window) {
@@ -1140,8 +1192,6 @@
 			n.disabled = false;
 		  }
 		}
-
-
 
     </script>
 		<script>
