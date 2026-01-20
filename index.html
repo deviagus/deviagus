@@ -338,70 +338,71 @@
                 </div> <!-- End max-w-7xl -->
             </section> <!-- End First Part -->
 
-            <!-- PARTE 2: AI TOOL (NeuroTrade) - FULL WIDTH -->
-            <!-- Se coloca por fuera de max-w-7xl para lograr el efecto full bleed -->
-            <section id="ai-tool" class="w-full py-20 relative z-20 border-y border-bordercolor/30 bg-black/40 backdrop-blur-md mb-20 shadow-2xl shadow-black/50">
-                <!-- Contenido centrado y limitado -->
-                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
-                        <div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10 relative z-10">
-                            <div class="text-center mb-8">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 flex justify-center items-center gap-2">
-                                    NeuroTrade IA
-                                    <span class="text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">BETA</span>
-                                </h2>
-                                <p class="text-gray-400 text-sm md:text-base">
-                                    ¿No sabés qué bot usar? La IA te recomienda el sistema más adecuado para vos.
-                                </p>
-                            </div>
+		<!-- Fragmento Sección NeuroTrade IA Aumentada -->
+		<section id="ai-tool" class="w-full py-20 relative z-20 border-y border-bordercolor/30 bg-black/40 backdrop-blur-md mb-20 shadow-2xl shadow-black/50">
+			<!-- Contenido centrado y limitado -->
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="bg-cardbg/80 backdrop-blur-md rounded-2xl border border-primary/20 p-1 shadow-2xl relative overflow-hidden">
+					<div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
+					<div class="bg-pagebg/50 rounded-xl p-4 sm:p-6 md:p-10 relative z-10">
+						<div class="text-center mb-10">
+							<!-- Título aumentado con clases text-4xl sm:text-6xl md:text-7xl -->
+							<h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 flex flex-col md:flex-row justify-center items-center gap-3 drop-shadow-2xl leading-tight">
+								NeuroTrade IA
+								<span class="text-sm sm:text-base bg-purple-900 text-purple-200 px-3 py-1 rounded-full align-middle transform -translate-y-1">BETA</span>
+							</h2>
+							<!-- Subtítulo aumentado -->
+							<p class="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+								¿No sabés qué bot usar? La IA te recomienda el sistema más adecuado para vos.
+							</p>
+						</div>
 
-                            <div class="space-y-4">
-                                <textarea id="market-input" rows="3" class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none" placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."></textarea>
+						<div class="space-y-4">
+							<textarea id="market-input" rows="3" class="w-full bg-black/40 border border-bordercolor rounded-lg p-4 text-base text-white placeholder-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none outline-none" placeholder="Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con bajo drawdown..."></textarea>
 
-                                <button onclick="analyzeMarket()" id="analyze-btn" class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2">
-                                    <span>Recomendarme un bot</span>
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                </button>
-                            </div>
+							<button onclick="analyzeMarket()" id="analyze-btn" class="w-full py-3 bg-primary hover:bg-primaryhover text-white font-bold rounded-lg transition-all duration-200 shadow-lg shadow-blue-900/20 flex justify-center items-center gap-2">
+								<span>Recomendarme un bot</span>
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+								</svg>
+							</button>
+						</div>
 
-                            <!-- Resultado IA -->
-                            <div id="ai-result" class="hidden mt-6 animate-fade-in">
-                                <div class="space-y-4">
+						<!-- Resultado IA -->
+						<div id="ai-result" class="hidden mt-6 animate-fade-in">
+							<div class="space-y-4">
 
-                                    <!-- Producto recomendado -->
-                                    <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/20 border border-purple-500/20 rounded-xl p-4">
-                                        <p class="text-sm text-purple-300 font-semibold mb-1">🧠 Producto recomendado</p>
-                                        <h3 id="ai-product" class="text-xl font-bold text-white"></h3>
-                                    </div>
+								<!-- Producto recomendado -->
+								<div class="bg-gradient-to-r from-purple-900/30 to-blue-900/20 border border-purple-500/20 rounded-xl p-4">
+									<p class="text-sm text-purple-300 font-semibold mb-1">🧠 Producto recomendado</p>
+									<h3 id="ai-product" class="text-xl font-bold text-white"></h3>
+								</div>
 
-                                    <!-- Por qué -->
-                                    <div class="bg-black/30 border border-bordercolor rounded-xl p-4">
-                                        <p class="text-sm font-semibold text-blue-400 mb-1">📌 Por qué</p>
-                                        <p id="ai-why" class="text-gray-300 text-sm leading-relaxed"></p>
-                                    </div>
+								<!-- Por qué -->
+								<div class="bg-black/30 border border-bordercolor rounded-xl p-4">
+									<p class="text-sm font-semibold text-blue-400 mb-1">📌 Por qué</p>
+									<p id="ai-why" class="text-gray-300 text-sm leading-relaxed"></p>
+								</div>
 
-                                    <!-- Cuándo conviene -->
-                                    <div class="bg-black/30 border border-bordercolor rounded-xl p-4">
-                                        <p class="text-sm font-semibold text-green-400 mb-1">📈 Cuándo conviene</p>
-                                        <p id="ai-when" class="text-gray-300 text-sm leading-relaxed"></p>
-                                    </div>
+								<!-- Cuándo conviene -->
+								<div class="bg-black/30 border border-bordercolor rounded-xl p-4">
+									<p class="text-sm font-semibold text-green-400 mb-1">📈 Cuándo conviene</p>
+									<p id="ai-when" class="text-gray-300 text-sm leading-relaxed"></p>
+								</div>
 
-                                    <!-- Nota de riesgo -->
-                                    <div class="bg-red-900/20 border border-red-500/30 rounded-xl p-4">
-                                        <p class="text-sm font-semibold text-red-400 mb-1">⚠️ Nota de riesgo</p>
-                                        <p id="ai-risk" class="text-gray-300 text-sm leading-relaxed"></p>
-                                    </div>
+								<!-- Nota de riesgo -->
+								<div class="bg-red-900/20 border border-red-500/30 rounded-xl p-4">
+									<p class="text-sm font-semibold text-red-400 mb-1">⚠️ Nota de riesgo</p>
+									<p id="ai-risk" class="text-gray-300 text-sm leading-relaxed"></p>
+								</div>
 
-                                </div>
-                            </div>
+							</div>
+						</div>
 
-                        </div>
-                    </div>
-                </div>
-            </section>
+					</div>
+				</div>
+			</div>
+		</section>
 
             <!-- PARTE 3: Resto de Servicios (Optimización, Pasos) -->
             <section class="pb-24 px-4 sm:px-6 lg:px-8 relative z-10">
