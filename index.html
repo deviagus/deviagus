@@ -36,7 +36,7 @@
             margin-bottom: 1.5rem;
         }
         @media (min-width: 768px) {
-            h1 { font-size: 3.75rem; } /* md:text-3xl */
+            h1 { font-size: 4.5rem; } /* Aumentado de 3.75rem a 4.5rem base */
             header { padding-top: 8rem; padding-bottom: 8rem; }
         }
         .hero-badge {
@@ -88,8 +88,10 @@
         /* Mejoras responsive y anti-CLS */
         * { box-sizing: border-box; }
         
+        /* MODIFICACIÓN AQUÍ: Aumentado el límite superior del clamp */
         h1 {
-            font-size: clamp(2rem, 5vw, 3.75rem) !important;
+            /* Antes estaba limitado a 3.75rem. Ahora permite hasta 6rem (aprox 96px) */
+            font-size: clamp(2.5rem, 8vw, 6rem) !important;
         }
         
         .hero-desc {
@@ -204,7 +206,15 @@
         <div class="inline-flex items-center gap-x-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 backdrop-blur-sm hero-badge">
             <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>Sistemas activos 24/7
         </div>
-        <h1 class="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight mx-auto max-w-[18ch]"> Trading Algorítmico <br class="block sm:hidden" /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">de Alta Precisión</span> </h1>
+        <!-- 
+            MODIFICACIÓN TÍTULO: 
+            Se actualizaron las clases de Tailwind a md:text-7xl y lg:text-8xl 
+            y se ajustó el CSS crítico arriba para permitirlas.
+        -->
+        <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight mx-auto max-w-[18ch]"> 
+            Trading Algorítmico <br class="block sm:hidden" /> 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">de Alta Precisión</span> 
+        </h1>
         <p class="mt-4 text-base sm:text-lg md:text-xl text-gray-400 mx-auto mb-10 leading-relaxed max-w-[42ch] md:max-w-[60ch] lg:max-w-[70ch]"> Eliminá las emociones y operá con ventaja estadística. Desarrollamos bots de trading y sistemas cuantitativos para <span class="text-white font-semibold">Prop Firms</span> y operar capital real.</p>
         <div class="flex flex-row gap-4 justify-center items-center w-full max-w-md hero-buttons">
 		  <a href="#ai-tool" onclick="event.preventDefault();document.getElementById('ai-tool').scrollIntoView({behavior:'smooth'});" class="px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition duration-300 shadow-lg shadow-purple-900/30 flex items-center gap-2 group cursor-pointer border border-white/10 flex-none min-w-[140px] justify-center"><span>✨</span> Probar IA</a>
@@ -212,7 +222,6 @@
 
 		</div>
     </header>
-    
     <!-- LAZY SECTION MOUNT: Servicios (DIVIDIDA PARA FULL WIDTH) -->
     <div class="lazy-placeholder" style="min-height: 800px;">
         <template>
@@ -1378,20 +1387,16 @@
 
       // Función para traducir texto (sin romper eventos/canvas)
 	  function translateSafe(map) {
-        // A. ORDENAR CLAVES: Frases largas primero para evitar traducciones parciales
-        // Esto soluciona que "Demo Gratis" rompa a "Obtener Demo Gratis"
-        const sortedEntries = Object.entries(map).sort((a, b) => b[0].length - a[0].length);
-
-        // B. Nodos de Texto visibles
+        // A. Nodos de Texto visibles
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while (node = walker.nextNode()) {
             let text = node.nodeValue;
             if (text.trim().length > 0) {
                 let replaced = false;
-                sortedEntries.forEach(([es, en]) => {
+                Object.entries(map).forEach(([es, en]) => {
                     if (text.includes(es)) {
-                        text = text.replaceAll(es, en);
+                        text = text.replace(es, en);
                         replaced = true;
                     }
                 });
@@ -1399,11 +1404,11 @@
             }
         }
 
-        // C. Contenido dentro de <template> (Lazy Loading)
+        // B. Contenido dentro de <template> (Lazy Loading)
         document.querySelectorAll('template').forEach(tmpl => {
             let html = tmpl.innerHTML;
             let replaced = false;
-            sortedEntries.forEach(([es, en]) => {
+            Object.entries(map).forEach(([es, en]) => {
                 if (html.includes(es)) {
                     html = html.replaceAll(es, en);
                     replaced = true;
