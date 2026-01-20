@@ -212,6 +212,7 @@
 
 		</div>
     </header>
+    
     <!-- LAZY SECTION MOUNT: Servicios (DIVIDIDA PARA FULL WIDTH) -->
     <div class="lazy-placeholder" style="min-height: 800px;">
         <template>
@@ -1377,16 +1378,20 @@
 
       // Función para traducir texto (sin romper eventos/canvas)
 	  function translateSafe(map) {
-        // A. Nodos de Texto visibles
+        // A. ORDENAR CLAVES: Frases largas primero para evitar traducciones parciales
+        // Esto soluciona que "Demo Gratis" rompa a "Obtener Demo Gratis"
+        const sortedEntries = Object.entries(map).sort((a, b) => b[0].length - a[0].length);
+
+        // B. Nodos de Texto visibles
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while (node = walker.nextNode()) {
             let text = node.nodeValue;
             if (text.trim().length > 0) {
                 let replaced = false;
-                Object.entries(map).forEach(([es, en]) => {
+                sortedEntries.forEach(([es, en]) => {
                     if (text.includes(es)) {
-                        text = text.replace(es, en);
+                        text = text.replaceAll(es, en);
                         replaced = true;
                     }
                 });
@@ -1394,11 +1399,11 @@
             }
         }
 
-        // B. Contenido dentro de <template> (Lazy Loading)
+        // C. Contenido dentro de <template> (Lazy Loading)
         document.querySelectorAll('template').forEach(tmpl => {
             let html = tmpl.innerHTML;
             let replaced = false;
-            Object.entries(map).forEach(([es, en]) => {
+            sortedEntries.forEach(([es, en]) => {
                 if (html.includes(es)) {
                     html = html.replaceAll(es, en);
                     replaced = true;
@@ -1445,4 +1450,3 @@
 	</script>
 </body>
 </html>
-
