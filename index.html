@@ -1387,6 +1387,11 @@
 
       // Función para traducir texto (sin romper eventos/canvas)
 	  function translateSafe(map) {
+        // 0. IMPORTANTE: Ordenar claves por longitud descendente (de más largo a más corto)
+        // Esto evita que frases cortas (ej: "Demo Gratis") se traduzcan dentro de frases largas
+        // (ej: "Obtener Demo Gratis") antes de que la frase larga sea procesada.
+        const sortedEntries = Object.entries(map).sort((a, b) => b[0].length - a[0].length);
+
         // A. Nodos de Texto visibles
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
@@ -1394,7 +1399,7 @@
             let text = node.nodeValue;
             if (text.trim().length > 0) {
                 let replaced = false;
-                Object.entries(map).forEach(([es, en]) => {
+                sortedEntries.forEach(([es, en]) => {
                     if (text.includes(es)) {
                         text = text.replace(es, en);
                         replaced = true;
@@ -1408,7 +1413,7 @@
         document.querySelectorAll('template').forEach(tmpl => {
             let html = tmpl.innerHTML;
             let replaced = false;
-            Object.entries(map).forEach(([es, en]) => {
+            sortedEntries.forEach(([es, en]) => {
                 if (html.includes(es)) {
                     html = html.replaceAll(es, en);
                     replaced = true;
