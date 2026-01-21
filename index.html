@@ -1242,140 +1242,146 @@
 		document.documentElement.lang = 'en';
         
         // 1. DICCIONARIO DE TEXTOS ACTUALIZADO (NUEVOS COPYS)
-		const dictionary = {
-		  // --- HERO ---
-		  'Automatizá tu operativa': 'Automate your trading',
-		  'Operá con reglas': 'Trade with rules',
-		  'Bots listos para prop firms y capital propio: ejecución automática, reglas claras y riesgo bajo control.': 'Trading bots ready for prop firms and real capital, with clear rules and automatic execution.',
-		  'Sistemas activos 24/7': 'Live systems 24/7',
-		  'Elegí tu bot con IA': 'Choose your bot with AI',
-		  'Demo Gratis': 'Free Demo',
+		const translations = {
+		  // --- META & TITLES ---
+		  "Nuestros Servicios - Trading Algorítmico": "Our Services - Algorithmic Trading",
+		  "Sistemas de trading algorítmico profesional con estrategias automatizadas, control de riesgo avanzado y configuraciones institucionales optimizadas.": "Professional algorithmic trading systems with automated strategies, advanced risk control, and optimized institutional configurations.",
 
-          // --- SERVICIOS ---
-		  'Elegí tu sistema según tu forma de operar': 'Which system to use based on your trading',
-		  'Ejecución, diversificación y control de riesgo, sin improvisar.': 'Three distinct solutions for intraday, portfolio, and risk control.',
-		  'Ideal para:': 'Ideal for:',
+		  // --- HEADER / HERO SECTION ---
+		  "Sistemas activos 24/7": "Live systems 24/7",
+		  "Automatizá tu trading": "Automate your trading",
+		  "Operá con reglas, no con impulsos": "Trade with rules, not impulses",
+		  "Bots listos para prop firms y capital propio: ejecución automática, reglas claras y riesgo bajo control.": "Bots ready for prop firms and personal capital: automatic execution, clear rules, and controlled risk.",
+		  "Elegí tu bot con IA": "Choose your bot with AI",
+		  "Demo Gratis": "Free Demo",
 
-          // --- MUSAHI ---
-          'Bot intradía para prop firms': 'Intraday bot for prop firms',
-          'Para traders de prop firms que buscan consistencia intradía con reglas fijas, evitando sobreoperar y cuidando el drawdown.': 'Designed for traders who want to trade every day with clear rules, without breaking limits or overtrading in prop firm accounts.',
-          'Breakout intradía automático': 'Automatic intraday breakout',
-          'Entre 5 y 10 trades semanales': 'Between 5 and 10 trades per week',
-          'Set inicial optimizado incluido': 'Includes optimized initial set',
-          'Guía paso a paso': 'Step-by-step guide',
-          'Challenges y cuentas fondeadas: consistencia sin sobreoperar.': 'Traders operating challenges and funded accounts who need consistency.',
-          'Ver Musahi': 'View Musahi',
+		  // --- SERVICIOS (INTRO) ---
+		  "Elegí tu sistema según tu forma de operar": "Choose the system that fits your trading style",
+		  "Ejecución, diversificación y control de riesgo, sin improvisar.": "Execution, diversification, and risk control—no improvisation.",
 
-          // --- NEBULAX ---
-          'Bot cuantitativo de mean reversion': 'Mean reversion quantitative bot',
-          'Un módulo cuantitativo para diversificar el portafolio y reducir dependencia de un solo tipo de mercado.': 'Designed for traders looking to diversify their portfolio and not rely solely on intraday strategies.',
-          'Mean reversion cuantitativa': 'Quantitative mean reversion',
-          'Swing trading automático': 'Automatic swing trading',
-          'Baja correlación con tendencia': 'Low correlation with trend',
-          'Set optimizado + guía incluida': 'Optimized set + guide included',
-          'Traders de portafolio que buscan suavizar el equity y equilibrar riesgo.': 'Portfolio traders seeking to balance risk and drawdown.',
-          'Ver NebulaX': 'View NebulaX',
+		  // --- PRODUCTO 1: MUSAHI ---
+		  "Bot intradía para prop firms": "Intraday bot for prop firms",
+		  "Para traders de prop firms que buscan consistencia intradía con reglas fijas, evitando sobreoperar y cuidando el drawdown.": "For prop firm traders seeking intraday consistency with fixed rules, avoiding overtrading and managing drawdown.",
+		  "Breakout intradía automático": "Automatic intraday breakout",
+		  "Entre 5 y 10 trades semanales": "Between 5 and 10 trades per week",
+		  "Set inicial optimizado incluido": "Optimized initial set included",
+		  "Guía paso a paso": "Step-by-step guide",
+		  "Ideal para:": "Ideal for:",
+		  "Challenges y cuentas fondeadas: consistencia sin sobreoperar.": "Challenges and funded accounts: consistency without overtrading.",
+		  "Ver Musahi": "View Musahi",
 
-          // --- RISKFORGE ---
-          'Control profesional de riesgo para MT5': 'Professional risk control for MT5',
-          'Si operás varios bots o cuentas, el riesgo no se gestiona “a ojo”. RiskForge te muestra la exposición real del portafolio en tiempo real para evitar sobreapalancamiento.': 'If you trade multiple bots or accounts, risk cannot be managed by eye. RiskForge shows your real portfolio exposure in real-time.',
-          'Gestión de riesgo a nivel portafolio': 'Portfolio-level risk management',
-          'Risk of Ruin (ROR) en tiempo real': 'Real-time Risk of Ruin (ROR)',
-          'Control de exposición total': 'Total exposure control',
-          'Configuración inicial incluida': 'Initial configuration included',
-          'Traders que gestionan múltiples EAs y cuentas y quieren reglas de riesgo claras.': 'Traders managing multiple EAs and accounts.',
-          'Ver RiskForge': 'View RiskForge',
+		  // --- PRODUCTO 2: NEBULAX ---
+		  "Bot cuantitativo de mean reversion": "Quantitative mean reversion bot",
+		  "Un módulo cuantitativo para diversificar el portafolio y reducir dependencia de un solo tipo de mercado.": "A quantitative module to diversify your portfolio and reduce reliance on a single market type.",
+		  "Mean reversion cuantitativa": "Quantitative mean reversion",
+		  "Swing trading automático": "Automatic swing trading",
+		  "Baja correlación con tendencia": "Low correlation with trend",
+		  "Set optimizado + guía incluida": "Optimized set + guide included",
+		  "Traders de portafolio que buscan suavizar el equity y equilibrar riesgo.": "Portfolio traders looking to smooth equity curves and balance risk.",
+		  "Ver NebulaX": "View NebulaX",
 
-          // --- DEMO (Moved Section) ---
-          'Probalo antes de arriesgar capital': 'Try it before trading real capital',
-          'Accedé a la demo para backtesting y validá el comportamiento del sistema en distintos escenarios antes de operar en real.': 'Access a demo version for backtesting and evaluate how the bot behaves in different scenarios before using real money.',
-          'Obtener demo gratuita': 'Get free demo',
+		  // --- PRODUCTO 3: RISKFORGE ---
+		  "Control profesional de riesgo para MT5": "Professional risk control for MT5",
+		  "Si operás varios bots o cuentas, el riesgo no se gestiona “a ojo”. RiskForge te muestra la exposición real del portafolio en tiempo real para evitar sobreapalancamiento.": "If you trade multiple bots or accounts, risk shouldn't be managed by guessing. RiskForge shows real-time portfolio exposure to prevent overleverage.",
+		  "Gestión de riesgo a nivel portafolio": "Portfolio-level risk management",
+		  "Risk of Ruin (ROR) en tiempo real": "Real-time Risk of Ruin (ROR)",
+		  "Control de exposición total": "Total exposure control",
+		  "Configuración inicial incluida": "Initial configuration included",
+		  "Traders que gestionan múltiples EAs y cuentas y quieren reglas de riesgo claras.": "Traders managing multiple EAs and accounts who want clear risk rules.",
+		  "Ver RiskForge": "View RiskForge",
 
-          // --- AI TOOL (NeuroTrade) ---
-          '¿No sabés qué sistema encaja con tu perfil? La IA te recomienda la mejor opción según tu contexto.': 'Don\'t know which bot to use? AI recommends the most suitable system for you.',
-          'Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con el menor drawdown posible…': 'Ex: I have a funded account and want to pass the challenge with low drawdown...',
-          'Recomendarme un bot': 'Recommend me a bot',
-          'Analizando...': 'Analyzing...',
-          'Producto recomendado': 'Recommended product',
-          'Por qué': 'Why',
-          'Cuándo conviene': 'When to use',
-          'Nota de riesgo': 'Risk note',
+		  // --- SECCIÓN DEMO ---
+		  "Probalo antes de arriesgar capital": "Try it before risking capital",
+		  "Accedé a la demo para backtesting y validá el comportamiento del sistema en distintos escenarios antes de operar en real.": "Access the demo for backtesting and validate system behavior in different scenarios before live trading.",
+		  "Obtener demo gratuita": "Get free demo",
 
-          // --- OPTIMIZACIÓN ---
-          'Servicio Premium': 'Premium Service',
-          'Optimización de Sets': 'Set Optimization',
-          'Mantené tu ventaja activa': 'Keep your edge alive',
-          'Los mercados cambian y los parámetros estáticos se degradan. Este mantenimiento mantiene tus bots alineados con la volatilidad y estructura actual del mercado para evitar operar con configuraciones obsoletas.': 'Markets change. Static parameters stop working. Our optimization service keeps your bots aligned with current market volatility and structure, preventing you from trading with obsolete configurations.',
-          'Por qué ajustar': 'Why adjust',
-          'Porque la volatilidad, correlaciones y rangos cambian. Un set que funcionó ayer puede perder eficacia hoy.': 'Because volatility, correlations, and ranges change. A set that worked yesterday may lose effectiveness today.',
-          'Cada cuánto': 'How often',
-          'Actualizaciones periódicas y ajustes extraordinarios ante cambios fuertes de mercado o eventos atípicos.': 'Periodic updates and extraordinary adjustments for strong market changes or black swan events.',
-          'Qué incluye': 'What\'s included',
-          'Sets actualizados, backtests verificados y soporte prioritario para asegurar una implementación correcta.': 'Updated sets, verified backtests, and priority support to ensure correct implementation.',
-          'Acceder a optimizaciones': 'Access optimizations',
-          'Consultar disponibilidad': 'Check availability',
+		  // --- HERRAMIENTA IA (NEUROTRADE) ---
+		  "¿No sabés qué sistema encaja con tu perfil? La IA te recomienda la mejor opción según tu contexto.": "Unsure which system fits your profile? AI recommends the best option based on your context.",
+		  "Ej: Tengo una cuenta de fondeo y quiero pasar el challenge con el menor drawdown posible…": "Ex: I have a funded account and want to pass the challenge with the lowest possible drawdown...",
+		  "Recomendarme un bot": "Recommend a bot",
+		  "Analizando...": "Analyzing...",
+		  "Producto recomendado": "Recommended product",
+		  "Por qué": "Why",
+		  "Cuándo conviene": "When to use",
+		  "Nota de riesgo": "Risk note",
 
-          // --- 4 PASOS ---
-          'Cómo empezar en 4 pasos simples': 'How to start in 4 simple steps',
-          'Acceso inmediato': 'Immediate access',
-          'Comprá la licencia a través del marketplace oficial de MQL5 y descargá el bot al instante.': 'Buy the license through the official MQL5 marketplace and download the bot instantly.',
-          'Instalación simple': 'Simple installation',
-          'Abrí MetaTrader 5, localizá el bot y arrastralo al gráfico correspondiente.': 'Open MetaTrader 5, locate the bot, and drag it to the corresponding chart.',
-          'Cargar configuración': 'Load configuration',
-          'Cargá el archivo': 'Load the file',
-          'incluido para aplicar la configuración recomendada.': 'included to apply the recommended configuration.',
-          'Activar operativa': 'Activate trading',
-          'Activá el “Algo Trading” y supervisá la operativa según tu gestión de riesgo.': 'Activate "Algo Trading" and supervise operations according to your risk management.',
+		  // --- OPTIMIZACIÓN DE SETS ---
+		  "Servicio Premium": "Premium Service",
+		  "Optimización de Sets": "Set Optimization",
+		  "Mantené tu ventaja activa": "Keep your edge alive",
+		  "Los mercados cambian y los parámetros estáticos se degradan. Este mantenimiento mantiene tus bots alineados con la volatilidad y estructura actual del mercado para evitar operar con configuraciones obsoletas.": "Markets change and static parameters degrade. This maintenance keeps your bots aligned with current volatility and market structure to avoid trading with obsolete configs.",
+		  "Por qué ajustar": "Why adjust",
+		  "Porque la volatilidad, correlaciones y rangos cambian. Un set que funcionó ayer puede perder eficacia hoy.": "Because volatility, correlations, and ranges change. A set that worked yesterday may lose effectiveness today.",
+		  "Cada cuánto": "How often",
+		  "Actualizaciones periódicas y ajustes extraordinarios ante cambios fuertes de mercado o eventos atípicos.": "Periodic updates and extraordinary adjustments for strong market shifts or outlier events.",
+		  "Qué incluye": "What's included",
+		  "Sets actualizados, backtests verificados y soporte prioritario para asegurar una implementación correcta.": "Updated sets, verified backtests, and priority support to ensure correct implementation.",
+		  "Acceder a optimizaciones": "Access optimizations",
+		  "Consultar disponibilidad": "Check availability",
 
-          // --- CERTIFICADOS ---
-          'Resultados reales en': 'Real results in',
-          'prop firms': 'prop firms',
-          'Resultados Verificados': 'Verified Results',
-          'Nuestros sistemas han superado evaluaciones y operan capital real bajo reglas estrictas de prop firms.': 'Our systems have passed evaluations and trade real capital under strict prop firm rules.',
-          'Verificado': 'Verified',
-          'Resultados obtenidos operando con Musashi, NebulaX y RiskForge, respetando las reglas de riesgo y consistencia exigidas por las prop firms.': 'Results obtained trading with Musashi, NebulaX, and RiskForge, respecting risk and consistency rules required by prop firms.',
-          
-		  // --- TRACK RECORD (Darwinex) ---
-		  'Resultados': 'Results',
-		  'Verificados': 'Verified',
-          'No solo lo decimos, lo demostramos. Nuestra estrategia': 'We don\'t just say it, we prove it. Our strategy',
-          'está auditada en tiempo real por Darwinex Zero, garantizando transparencia total en cada operación.': 'is audited in real-time by Darwinex Zero, guaranteeing total transparency in every trade.',
-          'Activo en Darwinex Zero': 'Active on Darwinex Zero',
-          'Algorítmico': 'Algorithmic',
-          'Auditado': 'Audited',
-          'Retorno Total': 'Total Return',
-          'Subiendo': 'Rising',
-          'Crecimiento constante bajo gestión de riesgo.': 'Constant growth under risk management.',
-          'Max Drawdown': 'Max Drawdown',
-          'Tiempo': 'Time',
-          'Meses': 'Months',
-          'Rating': 'Rating',
-          '*Los resultados pasados no garantizan rendimientos futuros.': '*Past results do not guarantee future returns.',
-          'Ver Análisis Completo': 'View Full Analysis',
-          
-		  // --- SECCIÓN: TESTIMONIOS (Completos) ---
-		  'Lo que dicen nuestros traders': 'What our traders say',
-		  'Testimonios reales de usuarios de': 'Real testimonials from users of',
-          'Excelente herramienta completamente automatizada, con la oportunidad de poder crear nuevos set en otros pares cambiando los parámetros. Gracias a esta herramienta puedo trabajar de forma manual en otras cuentas a la vez que trabaja el bot de forma independiente. El autor ofrece soporte para dudas o sugerencias y es muy atento, enviando set actualizados y nuevas funciones.': 'Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters. Thanks to this tool I can work manually on other accounts while the bot works independently. The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.',
-          'Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.': 'A great and reliable robot, and the creator is a very attentive person. Delighted with the purchase, thank you very much.',
+		  // --- PASOS (HOW TO START) ---
+		  "Cómo empezar en 4 pasos simples": "How to start in 4 simple steps",
+		  "Acceso inmediato": "Immediate access",
+		  "Comprá la licencia a través del marketplace oficial de MQL5 y descargá el bot al instante.": "Buy the license via the official MQL5 marketplace and download the bot instantly.",
+		  "Instalación simple": "Simple installation",
+		  "Abrí MetaTrader 5, localizá el bot y arrastralo al gráfico correspondiente.": "Open MetaTrader 5, locate the bot, and drag it onto the corresponding chart.",
+		  "Cargar configuración": "Load configuration",
+		  "Cargá el archivo": "Load the file",
+		  "incluido para aplicar la configuración recomendada.": "included to apply the recommended settings.",
+		  "Activar operativa": "Activate trading",
+		  "Activá el “Algo Trading” y supervisá la operativa según tu gestión de riesgo.": "Activate 'Algo Trading' and monitor operations according to your risk management.",
+
+		  // --- CERTIFICADOS Y RESULTADOS ---
+		  "Resultados Verificados": "Verified Results",
+		  "Resultados reales en": "Real results in",
+		  "prop firms": "prop firms",
+		  "Nuestros sistemas han superado evaluaciones y operan capital real bajo reglas estrictas de prop firms.": "Our systems have passed evaluations and trade real capital under strict prop firm rules.",
+		  "Verificado": "Verified",
+		  "Funded Trader": "Funded Trader",
+		  "Resultados obtenidos operando con Musahi, NebulaX y RiskForge, respetando las reglas de riesgo y consistencia exigidas por las prop firms.": "Results obtained trading with Musahi, NebulaX, and RiskForge, respecting risk and consistency rules required by prop firms.",
 		  
-		  // --- FOOTER / RECURRING ---
-          'Resultados de la Comunidad': 'Community Results',
-          'Capturas reales compartidas por nuestros miembros en el canal oficial.': 'Real screenshots shared by our members in the official channel.',
-          'Ver en Telegram': 'View on Telegram',
-          'Ver más resultados en Telegram': 'See more results on Telegram',
-          'Mira cómo operamos en': 'Watch how we trade on',
-          'Tutoriales y análisis': 'Live / Tutorial',
-          'Descubrí la lógica detrás de nuestros algoritmos. En el canal compartimos análisis, resultados documentados y guías claras para implementar y operar los sistemas correctamente.': 'Discover the logic and reasoning behind our trading algorithms. On the channel, we share real analysis, documented results, and clear explanations of how our strategies work in real market conditions.',
-          'Ver Canal': 'Visit Channel',
-          'Da el siguiente paso con un': 'Take the next step with a',
-          'sistema de trading profesional': 'professional trading system',
-          'Elige el algoritmo que mejor se adapte a tu forma de operar,': 'Choose the algorithm that best fits your trading style,',
-          'con reglas claras, riesgo controlado y un enfoque pensado para traders reales.': 'with clear rules, controlled risk, and an approach designed for real traders.',
-          'Ver Sistemas de Trading': 'View Trading Systems',
-          'Comparar Sistemas': 'Compare Systems',
-          'Sin promesas irreales. Sin gestión discrecional.': 'No unrealistic promises. No discretionary management.',
-          'Solo sistemas diseñados con lógica, control y disciplina.': 'Only systems designed with logic, control, and discipline.'
+		  // --- TRACK RECORD (DARWINEX) ---
+		  "No solo lo decimos, lo demostramos. Nuestra estrategia": "We don't just say it, we prove it. Our strategy",
+		  "está auditada en tiempo real por Darwinex Zero, garantizando transparencia total en cada operación.": "is audited in real-time by Darwinex Zero, guaranteeing total transparency in every trade.",
+		  "Activo en Darwinex Zero": "Active on Darwinex Zero",
+		  "Algorítmico": "Algorithmic",
+		  "Auditado": "Audited",
+		  "Retorno Total": "Total Return",
+		  "Subiendo": "Rising",
+		  "Crecimiento constante bajo gestión de riesgo.": "Steady growth under risk management.",
+		  "Max Drawdown": "Max Drawdown",
+		  "Tiempo": "Time",
+		  "Meses": "Months",
+		  "Rating": "Rating",
+		  "Ver Análisis Completo": "View Full Analysis",
+		  "*Los resultados pasados no garantizan rendimientos futuros.": "*Past results do not guarantee future returns.",
+
+		  // --- TESTIMONIOS ---
+		  "Lo que dicen nuestros traders": "What our traders say",
+		  "Testimonios reales de usuarios de": "Real testimonials from users of",
+		  // Nota: Los testimonios largos específicos se mantienen literales para preservar la voz del cliente, pero aquí tienes la traducción sugerida si deseas aplicarla:
+		  "Excelente herramienta completamente automatizada...": "Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters. Thanks to this tool I can work manually on other accounts while the bot works independently. The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.",
+		  "Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.": "A great and reliable robot, and the creator is a very attentive person. Delighted with the purchase, thank you very much.",
+
+		  // --- COMUNIDAD & YOUTUBE ---
+		  "Resultados de la Comunidad": "Community Results",
+		  "Capturas reales compartidas por nuestros miembros en el canal oficial.": "Real screenshots shared by our members in the official channel.",
+		  "Ver en Telegram": "View on Telegram",
+		  "Ver más resultados en Telegram": "See more results on Telegram",
+		  "Tutoriales y análisis": "Tutorials & Analysis",
+		  "Mira cómo operamos en": "See how we trade on",
+		  "Descubrí la lógica detrás de nuestros algoritmos. En el canal compartimos análisis, resultados documentados y guías claras para implementar y operar los sistemas correctamente.": "Discover the logic behind our algorithms. On the channel, we share analysis, documented results, and clear guides to correctly implement and trade the systems.",
+		  "Ver Canal": "Visit Channel",
+
+		  // --- CTA FINAL ---
+		  "Da el siguiente paso con un": "Take the next step with a",
+		  "sistema de trading profesional": "professional trading system",
+		  "Elige el algoritmo que mejor se adapte a tu forma de operar,": "Choose the algorithm that best fits your trading style,",
+		  "con reglas claras, riesgo controlado y un enfoque pensado para traders reales.": "with clear rules, controlled risk, and an approach designed for real traders.",
+		  "Ver Sistemas de Trading": "View Trading Systems",
+		  "Comparar Sistemas": "Compare Systems",
+		  "Sin promesas irreales. Sin gestión discrecional.": "No unrealistic promises. No discretionary management.",
+		  "Solo sistemas diseñados con lógica, control y disciplina.": "Only systems designed with logic, control, and discipline."
 		};
         
         // 2. MAPEO DE LINKS (URLs)
