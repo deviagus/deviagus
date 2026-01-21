@@ -1243,7 +1243,7 @@
         
         // 1. DICCIONARIO DE TEXTOS ACTUALIZADO (NUEVOS COPYS)
 		const dictionary = {
-		  // --- HERO ---
+		  // --- META & TITLES (Requieren actualización en translateSafe) ---
 		  'Nuestros Servicios - Trading Algorítmico': 'Our Services - Algorithmic Trading',
 		  'Sistemas de trading algorítmico profesional con estrategias automatizadas, control de riesgo avanzado y configuraciones institucionales optimizadas.': 'Professional algorithmic trading systems with automated strategies, advanced risk control, and optimized institutional configurations.',
 
@@ -1332,6 +1332,7 @@
 		  'Activá el “Algo Trading” y supervisá la operativa según tu gestión de riesgo.': 'Activate \'Algo Trading\' and monitor operations according to your risk management.',
 
 		  // --- CERTIFICADOS Y RESULTADOS ---
+		  'Resultados': 'Results', // NUEVO: Para casos donde "Resultados" está aislado por etiquetas HTML
 		  'Resultados Verificados': 'Verified Results',
 		  'Resultados reales en': 'Real results in',
 		  'prop firms': 'prop firms',
@@ -1356,12 +1357,18 @@
 		  'Ver Análisis Completo': 'View Full Analysis',
 		  '*Los resultados pasados no garantizan rendimientos futuros.': '*Past results do not guarantee future returns.',
 
-		  // --- TESTIMONIOS ---
+		  // --- TESTIMONIOS (Divididos por oraciones para mayor robustez) ---
 		  'Lo que dicen nuestros traders': 'What our traders say',
 		  'Testimonios reales de usuarios de': 'Real testimonials from users of',
-		  // Nota: Los testimonios largos específicos se mantienen literales para preservar la voz del cliente, pero aquí tienes la traducción sugerida si deseas aplicarla:
-		  'Excelente herramienta completamente automatizada...': 'Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters. Thanks to this tool I can work manually on other accounts while the bot works independently. The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.',
-		  'Un gran robot y fiable y el creador un gran hombre y atento. Encantado con la compra, muchas gracias.': 'A great and reliable robot, and the creator is a very attentive person. Delighted with the purchase, thank you very much.',
+		  
+		  // Review 1 (Dividida)
+		  'Excelente herramienta completamente automatizada, con la oportunidad de poder crear nuevos set en otros pares cambiando los parámetros.': 'Excellent fully automated tool, with the opportunity to create new sets on other pairs by changing parameters.',
+		  'Gracias a esta herramienta puedo trabajar de forma manual en otras cuentas a la vez que trabaja el bot de forma independiente.': 'Thanks to this tool I can work manually on other accounts while the bot works independently.',
+		  'El autor ofrece soporte para dudas o sugerencias y es muy atento, enviando set actualizados y nuevas funciones.': 'The author offers support for doubts or suggestions and is very attentive, sending updated sets and new functions.',
+		  
+		  // Review 2 (Dividida)
+		  'Un gran robot y fiable y el creador un gran hombre y atento.': 'A great and reliable robot, and the creator is a very attentive person.',
+		  'Encantado con la compra, muchas gracias.': 'Delighted with the purchase, thank you very much.',
 
 		  // --- COMUNIDAD & YOUTUBE ---
 		  'Resultados de la Comunidad': 'Community Results',
@@ -1382,7 +1389,7 @@
 		  'Comparar Sistemas': 'Compare Systems',
 		  'Sin promesas irreales. Sin gestión discrecional.': 'No unrealistic promises. No discretionary management.',
 		  'Solo sistemas diseñados con lógica, control y disciplina.': 'Only systems designed with logic, control, and discipline.'
-        };
+		};
         // 2. MAPEO DE LINKS (URLs)
         // Aquí definimos qué links cambian cuando está en inglés
         const linkMap = {
